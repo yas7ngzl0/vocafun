@@ -43,8 +43,8 @@ class MyApp extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            MyStatelessWidget(
-                'Aşagıdaki kutucuğa tıklayarak oyun sayfasına gidebilirsiniz'),
+            MyStatelessWidget('Aşagıdaki kutucuğa tıklayarak oyun '
+                '\nsayfasına gidebilirsiniz'),
             MyStatefulWidget(),
             //MyStatelessWidget('Stateless Widget 2'),
           ],
@@ -71,21 +71,21 @@ class MyStatelessWidget extends StatelessWidget {
       padding: EdgeInsets.all(16.0),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.lightbulb,
             size: 40,
             color: Colors.yellow,
           ),
-          SizedBox(width: 10), // İki öğe arasında bir boşluk ekleyin
+          const SizedBox(width: 10), // İki öğe arasında bir boşluk ekleyin
 
           Text(
             title,
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 15,
             ),
           ),
         ],
@@ -100,7 +100,7 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  String myText = 'Merhaba, Flutter!';
+  String myText = 'Kelime Oyunu';
   String infoText =
       'Kelime oyununda size bazı ingilizce kelimelerin içerisindeki rastegele birkaç harf'
       've kelimenin türkçesi verilecek ve sizde kelimeyi doğru tahmin etmeye çalışacaksınız';
@@ -112,14 +112,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         padding: const EdgeInsets.all(16.0),
         child: Stack(
           children: [
-            Positioned(
-              top: 10, // İlk metnin yüksekliğini ayarla
-              left: 20, // İlk metnin sol tarafındaki boşluğu ayarla
-              child: Text(
-                myText,
-                style: TextStyle(color: Colors.black, fontSize: 200),
-              ),
-            ),
             Container(
               width: 300,
               height: 300,
@@ -130,10 +122,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
             Positioned(
               top: 150, // Metnin yüksekliğini ayarla
-              left: 50, // Metnin sol tarafındaki boşluğu ayarla
+              left: 25, // Metnin sol tarafındaki boşluğu ayarla
               child: Text(
                 myText,
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(
+                  color: Colors.yellow[600],
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Positioned(
