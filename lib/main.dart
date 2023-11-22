@@ -57,7 +57,7 @@ class MyStatelessWidget extends StatelessWidget {
           const Icon(
             Icons.lightbulb,
             size: 40,
-            color: Colors.yellow,
+            color: Colors.yellowAccent,
           ),
           const SizedBox(width: 10), // İki öğe arasında bir boşluk ekleyin
 
@@ -90,6 +90,20 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     Colors.orange.shade200,
   ];
 
+  final List<String> boxTexts = [
+    'KELİME OYUNU',
+    'YAKINDA',
+    'YAKINDA',
+    'YAKINDA',
+  ];
+
+  final List<String> boxInfo = [
+    'Karşına ingilizce kelimeler ve içlerinden \nbazı harfler ve aynı zamanda türkçe \nanlamlar çıkacak. Kelime bilgini test et',
+    ' ',
+    ' ',
+    ' ',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -107,6 +121,33 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 color: customColors[index % customColors.length],
                 borderRadius: BorderRadius.circular(20),
               ),
+              child: Stack(
+                children: [
+                  Center(
+                    child: Positioned(
+                      child: Text(
+                        boxTexts[index % boxTexts.length],
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 70, // İstediğiniz yüksekliği ayarlayın
+                    left: 15, // İstediğiniz sol tarafındaki boşluğu ayarlayın
+                    child: Text(
+                      boxInfo[index % boxInfo.length],
+                      style: TextStyle(
+                        color: Colors.white54,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -114,81 +155,3 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     );
   }
 }
-
-/*class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  String myText = 'Kelime Oyunu';
-  String infoText =
-      'Kelime oyununda size bazı İngilizce kelimelerin içerisindeki rastgele birkaç harf'
-      've kelimenin Türkçesi verilecek ve siz de kelimeyi doğru tahmin etmeye çalışacaksınız';
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple[200],
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                ),
-                Positioned(
-                  top: 150,
-                  left: 25,
-                  child: Text(
-                    myText,
-                    style: TextStyle(
-                      color: Colors.yellow[600],
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 10,
-                  left: 20,
-                  child: Text(
-                    infoText,
-                    style: TextStyle(color: Colors.black, fontSize: 10),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            // Yatay Scroll View içinde aynı boyutta ve farklı renkte kutular
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.generate(
-                  4,
-                  (index) => Container(
-                    width: 100,
-                    height: 100,
-                    margin: EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.primaries[index % Colors.primaries.length],
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    // İçeriği özelleştirebilirsiniz
-                    child: Center(
-                      child: Text(
-                        'Kutu $index',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}*/
