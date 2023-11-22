@@ -4,23 +4,6 @@ void main() {
   runApp(MyApp());
 }
 
-/*class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.deepPurple,
-          title: Center(child: Text('Welcome')),
-          elevation: 10.0,
-        ),
-        body: MyStatefulWidget(),
-      ),
-    );
-  }
-}*/
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -100,44 +83,107 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  final List<Color> customColors = [
+    Colors.deepPurple.shade200,
+    Colors.blue.shade200,
+    Colors.green.shade200,
+    Colors.orange.shade200,
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(
+          4,
+          (index) => Padding(
+            padding: const EdgeInsets.all(40.0),
+            child: Container(
+              width: 300,
+              height: 300,
+              margin: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: customColors[index % customColors.length],
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/*class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   String myText = 'Kelime Oyunu';
   String infoText =
-      'Kelime oyununda size bazı ingilizce kelimelerin içerisindeki rastegele birkaç harf'
-      've kelimenin türkçesi verilecek ve sizde kelimeyi doğru tahmin etmeye çalışacaksınız';
+      'Kelime oyununda size bazı İngilizce kelimelerin içerisindeki rastgele birkaç harf'
+      've kelimenin Türkçesi verilecek ve siz de kelimeyi doğru tahmin etmeye çalışacaksınız';
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Stack(
+        child: Column(
           children: [
-            Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                color: Colors.deepPurple[200],
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-            ),
-            Positioned(
-              top: 150, // Metnin yüksekliğini ayarla
-              left: 25, // Metnin sol tarafındaki boşluğu ayarla
-              child: Text(
-                myText,
-                style: TextStyle(
-                  color: Colors.yellow[600],
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
+            Stack(
+              children: [
+                Container(
+                  width: 300,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple[200],
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
                 ),
-              ),
+                Positioned(
+                  top: 150,
+                  left: 25,
+                  child: Text(
+                    myText,
+                    style: TextStyle(
+                      color: Colors.yellow[600],
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 10,
+                  left: 20,
+                  child: Text(
+                    infoText,
+                    style: TextStyle(color: Colors.black, fontSize: 10),
+                  ),
+                ),
+              ],
             ),
-            Positioned(
-              top: 10, // İlk metnin yüksekliğini ayarla
-              left: 20, // İlk metnin sol tarafındaki boşluğu ayarla
-              child: Text(
-                infoText,
-                style: TextStyle(color: Colors.black, fontSize: 10),
+            SizedBox(height: 20),
+            // Yatay Scroll View içinde aynı boyutta ve farklı renkte kutular
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(
+                  4,
+                  (index) => Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.primaries[index % Colors.primaries.length],
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    // İçeriği özelleştirebilirsiniz
+                    child: Center(
+                      child: Text(
+                        'Kutu $index',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
@@ -145,4 +191,4 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ),
     );
   }
-}
+}*/
