@@ -6,6 +6,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final List<String> savedWords = [
+    'Merhaba',
+    'Flutter',
+    'Dart',
+    'Geliştirici',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,7 +29,8 @@ class MyApp extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SecondPage()),
+                    MaterialPageRoute(
+                        builder: (context) => DictionaryPage(savedWords)),
                   );
                 },
               ),
