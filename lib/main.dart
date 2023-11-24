@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vocafun/second_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,14 +13,19 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.deepPurple[200],
-          title: Text('Welcome'), // Doğrudan Text widget'ını kullan
+          title: const Text('Welcome'), // Doğrudan Text widget'ını kullan
           elevation: 10.0,
           actions: [
-            IconButton(
-              icon: Icon(Icons.star),
-              onPressed: () {
-                // Yıldıza tıklandığında yapılacak işlemler
-              },
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.star),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SecondPage()),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -127,7 +133,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     child: Positioned(
                       child: Text(
                         boxTexts[index % boxTexts.length],
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 20.0,
@@ -140,7 +146,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     left: 15, // İstediğiniz sol tarafındaki boşluğu ayarlayın
                     child: Text(
                       boxInfo[index % boxInfo.length],
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white54,
                         fontSize: 16.0,
                       ),
