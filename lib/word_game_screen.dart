@@ -156,7 +156,7 @@ class _GameWidgetState extends State<GameWidget> {
       if (visibleIndices.contains(index)) {
         return entry.value;
       } else {
-        return '_';
+        return ' _ ';
       }
     }).join()
         : '';
@@ -170,58 +170,83 @@ class _GameWidgetState extends State<GameWidget> {
             // Arka plan rengi
             Center(
               child: Container(
-                //width: MediaQuery.of(context).size.width,
-                //height: MediaQuery.of(context).size.height,
                 width: 300,
                 height: 300,
                 decoration: BoxDecoration(
                   color: getBoxColor(widget.selectedLevel),
-                    borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
-              ),
-            ),
-            // İçerik
-            Center(
-              child: Container(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                // Place the star button within the colored square's container
+                child: Stack(
                   children: [
-                    Text(
-                      '$selectedWord',
-                      style: TextStyle(fontSize: 30,color: Colors.white),
+                    Positioned(
+                      top: 0.0, // Adjust the top position to align with the top corner
+                      right: 0, // Adjust the right position to align with the right corner
+                      child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            // Tıklanınca durumu tersine çevir
+                            isFilled ? isFilled = false : isFilled = true;
+                          });
+                        },
+                        icon: Icon(
+                          isFilled ? Icons.star : Icons.star_border,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
+                    Positioned(
+                      bottom: 10,
+                      right: 100,
+                      left: 100,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0.0),),)
+                        ),
                       onPressed: () {
                         setState(() {
                           _updateSelectedWord();
                         });
                       },
-                      child: Text('Yeni Kelime'),
-                    ),
-                    SizedBox(height: 20),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          // Tıklanınca durumu tersine çevir
-                          isFilled ? isFilled = false : isFilled = true;
-                        });
-
-                      },
-                      icon: Icon(isFilled ? Icons.star : Icons.star_border,size: 35,color: Colors.white,),
-
-
+                      child: Text('A',style: TextStyle(fontSize: 30,color: Colors.black),),
 
                     ),
+                   ),
                   ],
                 ),
               ),
             ),
+      //içeriğin devamı
+
+              Container(
+                padding: EdgeInsets.all(16.0),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                        Text(
+                          '$selectedWord',
+                          style: TextStyle(fontSize: 25, color: Colors.white),
+                        ),
+
+                      SizedBox(height: 20),
+
+
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              ),
+
+            // Sağ üst köşedeki yıldız ikonu
+
           ],
         ),
       ),
     );
+
   }
 }
 
@@ -232,7 +257,7 @@ class _GameWidgetState extends State<GameWidget> {
       case 'A2':
         return Colors.blue.shade400;
       case 'B1':
-        return Colors.yellow.shade400;
+        return Colors.yellow.shade600;
       case 'B2':
         return Colors.orange.shade400;
       case 'C1':
@@ -278,7 +303,7 @@ Color getButtonColor(String level) {
     case 'A2':
       return Colors.blue.shade400;
     case 'B1':
-      return Colors.yellow.shade400;
+      return Colors.yellow.shade500;
     case 'B2':
       return Colors.orange.shade400;
     case 'C1':
