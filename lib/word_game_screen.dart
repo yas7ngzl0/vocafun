@@ -104,6 +104,7 @@ class GameWidget extends StatefulWidget {
 class _GameWidgetState extends State<GameWidget> {
   List<String> words = [];
   bool isFilled = false;
+  Set<int> shownIndices = Set();
 
   int selectedWordIndex = 0; // Kullanıcının seçtiği kelimenin index'i
   List<int> visibleIndices = []; // Gösterilen harflerin index'leri
@@ -126,22 +127,57 @@ class _GameWidgetState extends State<GameWidget> {
 
   void _updateSelectedWord() {
     if (words.isNotEmpty) {
+      /*selectedWordIndex = Random().nextInt(words.length);
+      letterCount = (words[selectedWordIndex].length/2).floor();
+      visibleIndices = _generateVisibleIndices(words[selectedWordIndex]);*/
       selectedWordIndex = Random().nextInt(words.length);
-      visibleIndices = _generateVisibleIndices(words[selectedWordIndex]);
+      letterCount = (words[selectedWordIndex].length / 2).floor();
+      shownIndices.clear();
+       // Yeni kelime geldiğinde gösterilen harfleri sıfırla
     }
   }
 
-  List<int> _generateVisibleIndices(String word) {
+  List<int> _generateVisibleIndices(String word,List<int> visibleIndices) {
     int wordLength = word.length;
     int visibleCount = letterCount;
-    if (visibleCount > wordLength) {
+
+    if (visibleCount >= wordLength) {
       visibleCount = wordLength;
+
+      _updateSelectedWord();
     }
 
     List<int> indices = List.generate(wordLength, (index) => index);
-    indices.shuffle(); // Harf index'lerini karıştır
 
-    return indices.sublist(0, visibleCount);
+    // Harf index'lerini karıştır ve visibleIndices dizisinde zaten bulunanları çıkart
+    List<int> availableIndices = indices.toSet().difference(visibleIndices.toSet()).toList();
+
+    // Eğer availableIndices boşsa, yani visibleIndices dizisindeki tüm harfler zaten gösterilmişse, sıfırdan başla
+    if (availableIndices.isEmpty) {
+      availableIndices = indices;
+      visibleIndices.clear();
+    }
+
+    // Rastgele bir indeks seç
+    int randomIndex = availableIndices[Random().nextInt(availableIndices.length)];
+
+    // Seçilen indeksi visibleIndices dizisine ekle
+    visibleIndices.add(randomIndex);
+
+    return visibleIndices.toList();
+  }
+
+  void getLetter(){
+    if (selectedWordIndex < 0 || selectedWordIndex >= words.length) {
+      // Geçerli bir kelime seçilmemişse veya kelime listesi boşsa işlem yapma
+      return;
+    }
+
+    String word = words[selectedWordIndex];
+    setState(() {
+      visibleIndices = _generateVisibleIndices(word,visibleIndices);
+      //letterCount++;
+    });
   }
 
   @override
@@ -207,7 +243,9 @@ class _GameWidgetState extends State<GameWidget> {
                         ),
                       onPressed: () {
                         setState(() {
-                          _updateSelectedWord();
+                          //_updateSelectedWord();
+                          //letterCount++;
+                          getLetter();
                         });
                       },
                       child: Text('A',style: TextStyle(fontSize: 30,color: Colors.black),),
