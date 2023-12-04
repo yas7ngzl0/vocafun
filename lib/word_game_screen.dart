@@ -192,9 +192,10 @@ class _GameWidgetState extends State<GameWidget> {
       if (visibleIndices.contains(index)) {
         return entry.value;
       } else {
-        return ' _ ';
+        //return '_';
+        return index < words[selectedWordIndex].length - 1 ? '_' : '';
       }
-    }).join()
+    }).join(' ')
         : '';
 
     //Color boxColor = getBoxColor(widget.selectedLevel);
