@@ -123,7 +123,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     ' ',
     ' ',
   ];
-
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -152,6 +152,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 decoration: BoxDecoration(
                   color: customColors[index % customColors.length],
                   borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: customColors[index % customColors.length].withOpacity(0.5),
+                      spreadRadius: 10,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // Şeklin yukarıdan aşağıya düşme mesafesi
+                    ),
+                  ],
                 ),
                 child: Stack(
                   children: [

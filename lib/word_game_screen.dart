@@ -281,6 +281,13 @@ class _GameWidgetState extends State<GameWidget> {
 
                     ),
                    ),
+                    Positioned(
+                      top: 5,
+                      left: 10,
+                      child: Text(widget.selectedLevel,style: TextStyle(
+                          fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),),
+                    ),
+
                   ],
                 ),
               ),
@@ -295,13 +302,15 @@ class _GameWidgetState extends State<GameWidget> {
                     children: [
                       Text(
                         meaning,
-                        style: TextStyle(fontSize: 20,color: Colors.white),
+                        style: TextStyle(
+                            fontSize: (words[selectedWordIndex].length > 10) ? 25 : 30,
+                            color: Colors.white,fontWeight: FontWeight.w300),
                       ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 10),
                         Text(
                           '$selectedWord',
                           style: TextStyle(
-                              fontSize: (words[selectedWordIndex].length > 10) ? 20 : 30
+                              fontSize: (words[selectedWordIndex].length > 10) ? 25 : 30
                               , color: Colors.white),
                         ),
 
