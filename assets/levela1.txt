@@ -98,7 +98,6 @@ crocodile
 cross
 cupboard
 dad
-Dan
 day
 desk
 dining
@@ -123,7 +122,6 @@ elephant
 end
 enjoy
 eraser
-Eva
 evening
 example
 eye
@@ -159,7 +157,6 @@ go
 goat
 good
 goodbye
-Grace
 grandfather
 grandma
 grandmother
@@ -194,7 +191,6 @@ how
 jacket
 jeans
 jellyfish
-Jill
 juice
 jump
 keyboard
@@ -213,7 +209,6 @@ lesson
 lets
 letter
 like
-lime
 line
 listen
 live
@@ -228,7 +223,6 @@ lunch
 make
 man
 mango
-Mark
 may
 meat
 meatballs
@@ -264,7 +258,6 @@ paper
 pardon
 park
 part
-Pat
 pea
 pear
 pen
@@ -303,7 +296,6 @@ rug
 ruler
 run
 sad
-Sam
 sand
 sausage
 say
@@ -348,7 +340,6 @@ stop
 store
 story
 street
-Sue
 sun
 sweet
 swim
@@ -367,7 +358,6 @@ tennis racket
 thank you
 thanks
 that
-the
 their
 theirs
 them
@@ -381,9 +371,7 @@ those
 throw
 tick
 tiger
-to
 today
-Tom
 tomato
 too
 toy
@@ -419,7 +407,6 @@ woman
 women
 word
 would like
-wow
 write
 year
 yellow
@@ -477,7 +464,7 @@ bus
 busy
 buy
 by
-café
+cafe
 cage
 call
 car park
@@ -487,14 +474,12 @@ carry
 catch
 centre
 change
-Charlie
 cheese
 cinema
 circle
 circus
 city
 city
-Clare
 clever
 climb
 cloud
@@ -514,7 +499,6 @@ countryside
 cry
 cup
 curly
-Daisy
 dance
 dangerous
 daughter
@@ -532,10 +516,8 @@ drive
 driver
 drop
 dry
-DVD
 earache
 easy
-e-book
 elevator
 email
 every
@@ -559,7 +541,6 @@ fix
 floor
 fly
 forest
-Fred
 Friday
 frightened
 funfair
@@ -577,7 +558,7 @@ grandson
 grass
 ground
 grow
-grown-up
+grown up
 have
 headache
 helmet
@@ -605,10 +586,6 @@ internet
 into
 invite
 island
-Jack
-Jane
-Jim
-Julia
 jungle
 kangaroo
 kick
@@ -621,7 +598,6 @@ laugh
 leaf
 library
 lift
-Lily
 lion
 little
 look for
@@ -631,7 +607,6 @@ loudly
 machine
 map
 market
-Mary
 matter
 mean
 message
@@ -672,9 +647,7 @@ parent
 parrot
 party
 pasta
-Paul
 penguin
-Peter
 picnic
 pirate
 place
@@ -707,7 +680,6 @@ round
 safe
 sail
 salad
-Sally
 sandwich
 Saturday
 sauce
@@ -790,7 +762,6 @@ uncle
 up
 upstairs
 vegetable
-Vicky
 video
 village
 wait
@@ -820,6 +791,5 @@ work
 world
 worse
 worst
-would
 wrong
 yesterday

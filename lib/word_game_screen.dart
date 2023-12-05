@@ -103,6 +103,7 @@ class GameWidget extends StatefulWidget {
 
 class _GameWidgetState extends State<GameWidget> {
   List<String> words = [];
+  List<String> meanings = []; // Anlamlar listesi eklenmiş.
   bool isFilled = false;
   Set<int> shownIndices = Set();
 
@@ -114,6 +115,7 @@ class _GameWidgetState extends State<GameWidget> {
   void initState() {
     super.initState();
     _loadWords();
+    _loadMeanings(); // Anlam dosyasını yükle
   }
 
   Future<void> _loadWords() async {
@@ -122,6 +124,14 @@ class _GameWidgetState extends State<GameWidget> {
     setState(() {
       words = data.split('\n'); // Satırlara ayır ve kelime listesini oluştur
       _updateSelectedWord();
+    });
+  }
+
+  Future<void> _loadMeanings() async {
+    final String meaningsData =
+    await DefaultAssetBundle.of(context).loadString('assets/levela1turkish.txt');
+    setState(() {
+      meanings = meaningsData.split('\n');
     });
   }
 
@@ -212,6 +222,10 @@ class _GameWidgetState extends State<GameWidget> {
     }).join('')
         : '';
 
+    String meaning = meanings.isNotEmpty
+        ? meanings[selectedWordIndex]
+        : ''; // Kelimenin anlamını al
+
     //Color boxColor = getBoxColor(widget.selectedLevel);
 
     return SafeArea(
@@ -279,6 +293,11 @@ class _GameWidgetState extends State<GameWidget> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Text(
+                        meaning,
+                        style: TextStyle(fontSize: 20,color: Colors.white),
+                      ),
+                        SizedBox(height: 20),
                         Text(
                           '$selectedWord',
                           style: TextStyle(
