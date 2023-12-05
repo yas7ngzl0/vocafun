@@ -174,10 +174,23 @@ class _GameWidgetState extends State<GameWidget> {
     }
 
     String word = words[selectedWordIndex];
-    setState(() {
-      visibleIndices = _generateVisibleIndices(word,visibleIndices);
-      //letterCount++;
-    });
+
+    // Görünen harflerin sayısını kontrol et
+    int visibleCount = visibleIndices.length;
+
+    // Eğer görünen harf sayısı kelimenin uzunluğuna eşitse, kelime tamamı görüntüleniyor demektir
+    if (visibleCount == word.length) {
+      setState(() {
+        //görüntülenen indis sayısını sıfır yap
+        visibleIndices = [];
+        //yeni kelimeye gec
+        _updateSelectedWord();
+      });
+    } else {
+      setState(() {
+        visibleIndices = _generateVisibleIndices(word, visibleIndices);
+      });
+    }
   }
 
   @override
@@ -193,9 +206,10 @@ class _GameWidgetState extends State<GameWidget> {
         return entry.value;
       } else {
         //return '_';
-        return index < words[selectedWordIndex].length - 1 ? '_' : '';
+        //son harf hariç diğerlerine çizgi koyuyoruz
+        return index < words[selectedWordIndex].length - 1 ? ' _ ' : '';
       }
-    }).join(' ')
+    }).join('')
         : '';
 
     //Color boxColor = getBoxColor(widget.selectedLevel);
@@ -249,7 +263,7 @@ class _GameWidgetState extends State<GameWidget> {
                           getLetter();
                         });
                       },
-                      child: Text('A',style: TextStyle(fontSize: 30,color: Colors.black),),
+                      child: Text('A',style: TextStyle(fontSize : 30, color: Colors.black),),
 
                     ),
                    ),
@@ -267,7 +281,9 @@ class _GameWidgetState extends State<GameWidget> {
                     children: [
                         Text(
                           '$selectedWord',
-                          style: TextStyle(fontSize: 25, color: Colors.white),
+                          style: TextStyle(
+                              fontSize: (words[selectedWordIndex].length > 10) ? 20 : 30
+                              , color: Colors.white),
                         ),
 
                       SizedBox(height: 20),
@@ -329,7 +345,7 @@ class LanguageLevelButton extends StatelessWidget {
       ),
       child: Text(
         level,
-        style: TextStyle(fontSize: 18, color: Colors.white),
+        style: TextStyle(fontSize: 20, color: Colors.white,fontWeight: FontWeight.bold),
       ),
     );
   }
