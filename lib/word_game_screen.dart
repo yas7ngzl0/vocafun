@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vocafun/dbHelper.dart';
 
 void main() {
   runApp(WordGameScreen());
@@ -106,6 +108,7 @@ class _GameWidgetState extends State<GameWidget> {
   List<String> meanings = []; // Anlamlar listesi eklenmiş.
   bool isFilled = false;
   Set<int> shownIndices = Set();
+  TextEditingController _controller = TextEditingController();
 
   int selectedWordIndex = 0; // Kullanıcının seçtiği kelimenin index'i
   List<int> visibleIndices = []; // Gösterilen harflerin index'leri
@@ -250,8 +253,35 @@ class _GameWidgetState extends State<GameWidget> {
                       child: IconButton(
                         onPressed: () {
                           setState(() {
+
+                            if(!isFilled){
+                               _loadWordAndMeaning(selectedWord, meaning);
+
+                               Fluttertoast.showToast(
+                                 msg: 'Kelime kaydedildi',
+                                 toastLength: Toast.LENGTH_SHORT,
+                                 gravity: ToastGravity.BOTTOM,
+                                 backgroundColor: getBoxColor(widget.selectedLevel),
+                                 textColor: Colors.white,
+                               );
+
+
+                            }else{
+                              _deleteWordAndMeaning(selectedWord);
+
+                              Fluttertoast.showToast(
+                                msg: 'Kelime kaydedilenlerden kaldırıldı',
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: getBoxColor(widget.selectedLevel),
+                                textColor: Colors.white,
+                              );
+                            }
+
+
                             // Tıklanınca durumu tersine çevir
                             isFilled ? isFilled = false : isFilled = true;
+
                           });
                         },
                         icon: Icon(
@@ -331,7 +361,37 @@ class _GameWidgetState extends State<GameWidget> {
     );
 
   }
+
+  @override
+  void dispose() {
+    // Bellek sızıntısını önlemek için controller'ı dispose et
+    _controller.dispose();
+    super.dispose();
+  }
+
+
+
+  }
+
+
+
+void _loadWordAndMeaning(String newWord,String newMeaning) async {
+  DBHelper dbHelper = DBHelper();
+  await dbHelper.insertWord(newWord, newMeaning);
+
 }
+
+void _deleteWordAndMeaning(String word) async {
+  DBHelper dbHelper = DBHelper();
+  await dbHelper.deleteWord(word);
+
+
+}
+
+
+
+
+
 
   Color getBoxColor(String level) {
     switch (level) {
