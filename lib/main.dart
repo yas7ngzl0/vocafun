@@ -16,12 +16,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
+      /*theme: ThemeData.light(), // Varsayılan tema
+      darkTheme: ThemeData.dark(), // Koyu tema
+      themeMode: ThemeMode.system, // Sistem temasını kullan*/
+
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.deepPurple[200],
-          title: const Text('Welcome'), // Doğrudan Text widget'ını kullan
+          title: const Text('Welcome!',
+            style: TextStyle(color: Colors.white),),
           elevation: 10.0,
           actions: [
             Builder(

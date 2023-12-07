@@ -45,10 +45,38 @@ class _DictionaryPageState extends State<DictionaryPage> {
                 final wordMap = savedWords[index];
                 return Dismissible(
                   key: Key(wordMap['word']),
-                  // ... diğer Dismissible özellikleri ...
+                  onDismissed: (direction) {
+                    _deleteWord(index);
+                  },
+                  confirmDismiss: (direction) async {
+                    return await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Silme Onayı"),
+                          content: const Text("Bu kelimeyi silmek istiyor musunuz?"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: const Text("Evet"),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text("Hayır"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  background: Container(
+                    color: Colors.red,
+                    child: Icon(Icons.delete, color: Colors.white),
+                  ),
                   child: ListTile(
                     title: Text(wordMap['word']),
                     subtitle: Text(wordMap['meaning']),
+                    trailing: Icon(Icons.star, color: Colors.deepPurple[200]), // Burada mor yıldız ekleniyor
                   ),
                 );
               },
@@ -58,4 +86,16 @@ class _DictionaryPageState extends State<DictionaryPage> {
       ),
     );
   }
+
+  void _deleteWord(int index) async {
+    DBHelper dbHelper = DBHelper();
+    List<Map<String, dynamic>> words = await dbHelper.getWords();
+    if (index >= 0 && index < words.length) {
+      await dbHelper.deleteWord(words[index]['word']);
+      setState(() {
+        savedWordsFuture = _loadSavedWords();
+      });
+    }
+  }
 }
+

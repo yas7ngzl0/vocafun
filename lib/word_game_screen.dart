@@ -31,7 +31,7 @@ class WordGameScreen extends StatelessWidget {
             children: [
               Text(
                 'Dil Seviyesi Seçimi',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18,color: Colors.black),
               ),
               SizedBox(height: 20),
               Container(
@@ -300,7 +300,8 @@ class _GameWidgetState extends State<GameWidget> {
                       left: 100,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            backgroundColor: MaterialStateProperty.all(Colors.white),
+                            shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(0.0),),)
                         ),
                       onPressed: () {
