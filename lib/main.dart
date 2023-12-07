@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => DictionaryPage(savedWords)),
+                        builder: (context) => DictionaryPage()),
                   );
                 },
               ),

@@ -8,14 +8,14 @@ class DBHelper {
 
   DBHelper.internal();
 
-  late Database _db;
+  Database? _db; // Değişiklik burada, nullable olarak tanımlandı
 
   Future<Database> get db async {
     if (_db != null) {
-      return _db;
+      return _db!;
     }
     _db = await initDb();
-    return _db;
+    return _db!;
   }
 
   Future<Database> initDb() async {
@@ -56,7 +56,6 @@ class DBHelper {
       whereArgs: [word],
     );
   }
-
 
   Future<List<Map<String, dynamic>>> getWords() async {
     var client = await db;

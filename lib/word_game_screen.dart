@@ -196,8 +196,11 @@ class _GameWidgetState extends State<GameWidget> {
       setState(() {
         //görüntülenen indis sayısını sıfır yap
         visibleIndices = [];
+
         //yeni kelimeye gec
         _updateSelectedWord();
+        //yeni kelime geldiği için yıldızın içi boşaltılıyor
+        isFilled = false;
       });
     } else {
       setState(() {
@@ -255,7 +258,7 @@ class _GameWidgetState extends State<GameWidget> {
                           setState(() {
 
                             if(!isFilled){
-                               _loadWordAndMeaning(selectedWord, meaning);
+                               _loadWordAndMeaning(words[selectedWordIndex], meaning);
 
                                Fluttertoast.showToast(
                                  msg: 'Kelime kaydedildi',
@@ -267,7 +270,7 @@ class _GameWidgetState extends State<GameWidget> {
 
 
                             }else{
-                              _deleteWordAndMeaning(selectedWord);
+                              _deleteWordAndMeaning(words[selectedWordIndex]);
 
                               Fluttertoast.showToast(
                                 msg: 'Kelime kaydedilenlerden kaldırıldı',
