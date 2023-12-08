@@ -246,6 +246,14 @@ class _GameWidgetState extends State<GameWidget> {
                 decoration: BoxDecoration(
                   color: getBoxColor(widget.selectedLevel),
                   borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: getBoxColor(widget.selectedLevel).withOpacity(0.5),
+                      spreadRadius: 10,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // Şeklin yukarıdan aşağıya düşme mesafesi
+                    ),
+                  ],
                 ),
                 // Place the star button within the colored square's container
                 child: Stack(
