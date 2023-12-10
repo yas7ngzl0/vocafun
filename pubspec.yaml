@@ -69,6 +69,12 @@ flutter:
     - assets/levela2turkish.txt
     - assets/levelb1.txt
     - assets/levelb1turkish.txt
+    - assets/levelb2.txt
+    - assets/levelb2turkish.txt
+    - assets/levelc1.txt
+    - assets/levelc1turkish.txt
+    - assets/levelc2.txt
+    - assets/levelc2turkish.txt . 
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
