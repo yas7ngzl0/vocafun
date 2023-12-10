@@ -92,7 +92,8 @@ class MyStatelessWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
             ),
           ),
         ],

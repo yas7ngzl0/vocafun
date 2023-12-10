@@ -114,6 +114,8 @@ class _GameWidgetState extends State<GameWidget> {
   List<int> visibleIndices = []; // Gösterilen harflerin index'leri
   int letterCount = 3; // Gösterilen harf sayısı
 
+
+
   @override
   void initState() {
     super.initState();
@@ -122,8 +124,10 @@ class _GameWidgetState extends State<GameWidget> {
   }
 
   Future<void> _loadWords() async {
-    final String data =
-    await DefaultAssetBundle.of(context).loadString('assets/levela1.txt');
+    /*final String data =
+    await DefaultAssetBundle.of(context).loadString('assets/levela1.txt');*/
+    String fileName = 'level${widget.selectedLevel.toLowerCase()}.txt';
+    final String data = await DefaultAssetBundle.of(context).loadString('assets/$fileName');
     setState(() {
       words = data.split('\n'); // Satırlara ayır ve kelime listesini oluştur
       _updateSelectedWord();
@@ -131,8 +135,11 @@ class _GameWidgetState extends State<GameWidget> {
   }
 
   Future<void> _loadMeanings() async {
-    final String meaningsData =
-    await DefaultAssetBundle.of(context).loadString('assets/levela1turkish.txt');
+    /*final String meaningsData =
+    await DefaultAssetBundle.of(context).loadString('assets/levela1turkish.txt');*/
+    // Önce selectedLevel'i küçük harfe çevir ve başına "level" ekle
+    String fileName = 'level${widget.selectedLevel.toLowerCase()}turkish.txt';
+    final String meaningsData = await DefaultAssetBundle.of(context).loadString('assets/$fileName');
     setState(() {
       meanings = meaningsData.split('\n');
     });
