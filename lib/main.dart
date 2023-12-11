@@ -104,12 +104,7 @@ class MyStatelessWidget extends StatelessWidget {
 
 
 
-class MyStatefulWidget extends StatefulWidget {
-  @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class MyStatefulWidget extends StatelessWidget {
   final List<Color> customColors = [
     Colors.deepPurple.shade200,
     Colors.blue.shade200,
@@ -125,84 +120,90 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   ];
 
   final List<String> boxInfo = [
-    'Karşına ingilizce kelimeler ve içlerinden \nbazı harfler ve aynı zamanda türkçe \nanlamlar çıkacak. Kelime bilgini test et',
+    'Karşına ingilizce kelimeler ve içlerinden bazı harfler ve aynı zamanda türkçe anlamlar çıkacak. Kelime bilgini test et',
     ' ',
     ' ',
     ' ',
   ];
-  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: List.generate(
-          4,
-          (index) => GestureDetector(
-            onTap: () {
-              if (index == 0) { // İlk kutuya tıklandığında
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => WordGameScreen()),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            buildBox(0,context),
+            buildBox(1,context),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            buildBox(2,context),
+            buildBox(3,context),
+          ],
+        ),
+      ],
+    );
+  }
 
-                );
-
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Container(
-                width: 300,
-                height: 300,
-                margin: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: customColors[index % customColors.length],
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: customColors[index % customColors.length].withOpacity(0.5),
-                      spreadRadius: 10,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // Şeklin yukarıdan aşağıya düşme mesafesi
-                    ),
-                  ],
-                ),
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Positioned(
-                        child: Text(
-                          boxTexts[index % boxTexts.length],
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 70, // İstediğiniz yüksekliği ayarlayın
-                      left: 10, // İstediğiniz sol tarafındaki boşluğu ayarlayın
-                      child: Text(
-                        boxInfo[index % boxInfo.length],
-                        style: const TextStyle(
-                          color: Colors.white54,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+  Widget buildBox(int index,BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        if (index == 0) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => WordGameScreen()),
+          );
+        }
+      },
+      child: Container(
+        width: 180,
+        height: 180,
+        margin: EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          color: customColors[index],
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: customColors[index].withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 5,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              boxTexts[index],
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16.0,
               ),
             ),
-          ),
+            SizedBox(height: 8),
+            Text(
+              boxInfo[index],
+              style: const TextStyle(
+                color: Colors.white54,
+                fontSize: 12.0,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+
+
+
 
 
 
