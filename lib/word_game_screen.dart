@@ -22,7 +22,7 @@ class WordGameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white, // Arka plan rengi beyaz yapıldı
+        backgroundColor: Colors.white,
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -31,41 +31,10 @@ class WordGameScreen extends StatelessWidget {
             children: [
               Text(
                 'Dil Seviyesi Seçimi',
-                style: TextStyle(fontSize: 18,color: Colors.black),
+                style: TextStyle(fontSize: 18, color: Colors.black),
               ),
               SizedBox(height: 20),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    buildLanguageLevelButton(context,'A1'),
-                   buildLanguageLevelButton(context,'A2'),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                   buildLanguageLevelButton(context,'B1'),
-                    buildLanguageLevelButton(context,'B2'),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    buildLanguageLevelButton(context,'C1'),
-                    buildLanguageLevelButton(context,'C2'),
-                  ],
-                ),
-              ),
+              buildLanguageLevelButtons(context),
             ],
           ),
         ),
@@ -73,23 +42,48 @@ class WordGameScreen extends StatelessWidget {
     );
   }
 
-  LanguageLevelButton buildLanguageLevelButton(BuildContext context,String level) {
+  Widget buildLanguageLevelButtons(BuildContext context) {
+    return Column(
+      children: [
+        buildLanguageLevelRow(context, ['A1', 'A2'] ),
+        SizedBox(height: 20),
+        buildLanguageLevelRow(context, ['B1', 'B2']),
+        SizedBox(height: 20),
+        buildLanguageLevelRow(context, ['C1','C2']),
+      ],
+    );
+  }
+
+  Widget buildLanguageLevelRow(BuildContext context, List<String> levels) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: levels
+            .map((level) => buildLanguageLevelButton(context, level))
+            .toList(),
+      ),
+    );
+  }
+
+  LanguageLevelButton buildLanguageLevelButton(BuildContext context, String level) {
+
     return LanguageLevelButton(
-                    level: level,
-                    onPressed: () {
-                      print('$level seviyesine tıklandı!');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => GameWidget(selectedLevel: level,)),
-                      );
-                      // Buraya istediğiniz widget'ın açılmasını sağlayacak kodları ekleyebilirsiniz
-                    },
-                  );
+      level: level,
+      onPressed: () {
+        print('$level seviyesine tıklandı!');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GameWidget(selectedLevel: level),
+          ),
+        );
+
+      },
+    );
+
   }
 }
-
-
-
 
 
 
@@ -326,7 +320,7 @@ class _GameWidgetState extends State<GameWidget> {
                           getLetter();
                         });
                       },
-                      child: Text('A',style: TextStyle(fontSize : 30, color: Colors.black),),
+                      child: Text('A',style: TextStyle(fontSize : 30, color: Colors.black,fontWeight: FontWeight.bold),),
 
                     ),
                    ),

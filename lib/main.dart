@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vocafun/make_sentences.dart';
+import 'package:vocafun/match_words.dart';
 import 'package:vocafun/second_page.dart';
 import 'package:vocafun/word_game_screen.dart';
 
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
       /*theme: ThemeData.light(), // Varsayılan tema
       darkTheme: ThemeData.dark(), // Koyu tema
       themeMode: ThemeMode.system, // Sistem temasını kullan*/
+      title: 'VocaFun',
 
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -114,16 +117,16 @@ class MyStatefulWidget extends StatelessWidget {
 
   final List<String> boxTexts = [
     'KELİME OYUNU',
-    'YAKINDA',
-    'YAKINDA',
-    'YAKINDA',
+    'CÜMLE KURMA',
+    'TABU',
+    'KELİME EŞLEŞTİRME',
   ];
 
   final List<String> boxInfo = [
     'Karşına ingilizce kelimeler ve içlerinden bazı harfler ve aynı zamanda türkçe anlamlar çıkacak. Kelime bilgini test et',
-    ' ',
-    ' ',
-    ' ',
+    'Karşına bir cümlenin kelimeleri sıralanmamış bir şekilde gelecek ve senin o cümleyi sırlaman gerekecek ',
+    'Arkadaşlarınla beraber oynayabileceğin klasik bir tabu oyunu fakat ingilizce',
+    'Kelimeleri anlamlarıyla eşleştirmeceğin eğlenceli bir oyun!',
   ];
 
   @override
@@ -158,6 +161,20 @@ class MyStatefulWidget extends StatelessWidget {
             MaterialPageRoute(builder: (context) => WordGameScreen()),
           );
         }
+        if(index == 1){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MakeSentencesScreen()),
+          );
+        }
+        //bu kısma 2. indexteki işlemi ayz
+        if(index == 3){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MatchWords()),
+          );
+        }
+
       },
       child: Container(
         width: 180,
@@ -186,12 +203,15 @@ class MyStatefulWidget extends StatelessWidget {
                 fontSize: 16.0,
               ),
             ),
-            SizedBox(height: 8),
-            Text(
-              boxInfo[index],
-              style: const TextStyle(
-                color: Colors.white54,
-                fontSize: 12.0,
+            SizedBox(height: 8,),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                boxInfo[index],
+                style: const TextStyle(
+                  color: Colors.white54,
+                  fontSize: 12.0,
+                ),
               ),
             ),
           ],
