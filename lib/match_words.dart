@@ -22,6 +22,8 @@ class _MatchWordsState extends State<MatchWords> {
   List<String> meanings = [];
   List<String> shuffledEnglishWords = [];
   List<String> shuffledMeanings = [];
+  List<WordPair> wordPairs = [];
+  List<int> usedRandom = [];
 
   @override
   void initState() {
@@ -32,16 +34,18 @@ class _MatchWordsState extends State<MatchWords> {
 
   Future<void> _loadWords() async {
     String fileName = 'levelb2.txt';
-    final String data = await DefaultAssetBundle.of(context).loadString('assets/$fileName');
+    final String data = await DefaultAssetBundle.of(context).loadString(
+        'assets/$fileName');
     setState(() {
       englishWords = data.split('\n');
-      _shuffleWords();
+      //_shuffleWords();
     });
   }
 
   Future<void> _loadMeanings() async {
     String fileName = 'levelb2turkish.txt';
-    final String meaningsData = await DefaultAssetBundle.of(context).loadString('assets/$fileName');
+    final String meaningsData = await DefaultAssetBundle.of(context).loadString(
+        'assets/$fileName');
     setState(() {
       meanings = meaningsData.split('\n');
       _shuffleWords();
@@ -60,27 +64,20 @@ class _MatchWordsState extends State<MatchWords> {
       int randomIndex = random.nextInt(englishWords.length);
       String selectedWord = englishWords[randomIndex];
       String selectedMean = meanings[randomIndex];
+      WordPair wordPair = WordPair(
+          word: englishWords[randomIndex], meaning: meanings[randomIndex]);
 
       // Eğer seçilen kelime zaten shuffledList'te yoksa ekle
-      if (!shuffledEnglishWords.contains(selectedWord) || !meanings.contains(selectedMean)) {
-        shuffledEnglishWords.add(selectedWord);
-        shuffledEnglishWords.shuffle();
-        shuffledMeanings.add(selectedMean);
-        shuffledMeanings.shuffle();
+      if (!wordPairs.contains(wordPair)) {
+        wordPairs.add(wordPair);
       } else {
         // Eğer seçilen kelime zaten shuffledList'te varsa, bir daha seç
         i--;
       }
     }
-
-    // shuffledList'i ekrana yazdır
-    print('shuffledList: $shuffledEnglishWords');
+    wordPairs.shuffle();
   }
 
-  void _shuffleMeanings() {
-    shuffledMeanings = List.from(meanings);
-    shuffledMeanings.shuffle();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,8 +88,14 @@ class _MatchWordsState extends State<MatchWords> {
           children: [
             Center(
               child: Container(
-                height: (MediaQuery.of(context).size.height) * 0.5,
-                width: (MediaQuery.of(context).size.width) * 0.95,
+                height: (MediaQuery
+                    .of(context)
+                    .size
+                    .height) * 0.5,
+                width: (MediaQuery
+                    .of(context)
+                    .size
+                    .width) * 0.95,
                 decoration: BoxDecoration(
                   color: Colors.orange.shade200,
                   border: Border.all(color: Colors.grey, width: 2.0),
@@ -132,33 +135,77 @@ class _MatchWordsState extends State<MatchWords> {
     );
   }
 
+  List<int> generateUniqueNumbers() {
+
+    Random random = Random();
+
+    while (usedRandom.length < 5) {
+      int newNumber = random.nextInt(5);
+
+      if (!usedRandom.contains(newNumber)) {
+        usedRandom.add(newNumber);
+      }
+    }
+
+    return usedRandom;
+  }
+
+
   Widget buildRowOfBoxes(bool isLeftColumn) {
+    generateUniqueNumbers();
+    int i = 0;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: List.generate(
         5,
-            (index) => Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            width: 170.0,
-            height: 60.0,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Colors.blueGrey, width: 2.0),
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            child: Center(
-              child: Text(
-                isLeftColumn
-                    ? shuffledEnglishWords[index]
-                    : shuffledMeanings[index],
+            (index) {
+
+          int randomIndex = usedRandom[i];
+          i++;
+          // Her bir kutu için ayrı bir rastgele indeks al
+
+
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: 170.0,
+              height: 60.0,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.blueGrey, width: 2.0),
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Center(
+                child: Text(
+                  isLeftColumn ? wordPairs[index].word : wordPairs[randomIndex]
+                      .meaning,
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
+}
+
+class WordPair {
+
+  String word;
+  String meaning;
+
+  WordPair({required this.word, required this.meaning});
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is WordPair && other.word == word && other.meaning == meaning;
+  }
+
+  @override
+  int get hashCode => word.hashCode ^ meaning.hashCode;
+
 }
 
 
