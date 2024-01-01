@@ -139,6 +139,26 @@ class _MatchWordsState extends State<MatchWords> {
     );
   }
 
+
+  bool allWordsMatched() {
+    // Tüm kelimeler eşleştirildi mi kontrol et
+    return matchedPairsLeft.length == 5 && matchedPairsRight.length == 5;
+  }
+
+  void getNewWords() {
+    // Yeni rastgele kelimeleri al
+    setState(() {
+      wordPairs.clear();
+      matchedPairsLeft.clear();
+      matchedPairsRight.clear();
+      usedRandom.clear();
+      selectedWordIndex = -1;
+      _shuffleWords();
+    });
+  }
+
+
+  //rastegele kelimeler için bu fonksiyon kullanılıyor
   List<int> generateUniqueNumbers() {
     Random random = Random();
 
@@ -165,6 +185,7 @@ class _MatchWordsState extends State<MatchWords> {
           int randomIndex = usedRandom[i];
           i++;
 
+          //sağ ve sol sütunların kontrolu için bu değişkenler kullanılıyor
           bool isMatchedLeft = matchedPairsLeft.contains(index);
           bool isMatchedRight = matchedPairsRight.contains(randomIndex);// Sadece kutunun kendisinin eşleşip eşleşmediğini kontrol et
 
@@ -177,6 +198,7 @@ class _MatchWordsState extends State<MatchWords> {
                     selectedWordIndex = index;
                   });
                 } else {
+                  //eğer kelimeler eşleşiyorsa ve sağ veya sol sütun boşsa seçilen keliemelri eşleştir
                   if (selectedWordIndex != -1 &&
                       wordPairs[selectedWordIndex].word ==
                           wordPairs[randomIndex].word &&
@@ -185,6 +207,13 @@ class _MatchWordsState extends State<MatchWords> {
                       matchedPairsLeft.add(selectedWordIndex);
                       matchedPairsRight.add(randomIndex);
                       selectedWordIndex = -1;
+
+                      // Tüm kelimeler eşleştirildi mi kontrol et
+                      if (allWordsMatched()) {
+                        // Tüm kelimeler eşleştirildiyse yeni kelimeleri al
+                        getNewWords();
+                      }
+
                     });
                   } else {
                     setState(() {
@@ -200,6 +229,7 @@ class _MatchWordsState extends State<MatchWords> {
                   width: 170.0,
                   height: 60.0,
                   decoration: BoxDecoration(
+                    //eşleşen kelimeler doğru ise kutuların rengini yeşile çevir
                     color: (isLeftColumn && isMatchedLeft) || (!isLeftColumn && isMatchedRight)
                         ? Colors.green
                         : (isLeftColumn && selectedWordIndex == index
