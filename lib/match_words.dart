@@ -24,6 +24,10 @@ class _MatchWordsState extends State<MatchWords> {
   List<String> shuffledMeanings = [];
   List<WordPair> wordPairs = [];
   List<int> usedRandom = [];
+  List<int> matchedPairsLeft = [];
+  List<int> matchedPairsRight = [];
+  int selectedWordIndex = -1;
+  int selectedMeaningIndex = -1;
 
   @override
   void initState() {
@@ -136,7 +140,6 @@ class _MatchWordsState extends State<MatchWords> {
   }
 
   List<int> generateUniqueNumbers() {
-
     Random random = Random();
 
     while (usedRandom.length < 5) {
@@ -159,26 +162,57 @@ class _MatchWordsState extends State<MatchWords> {
       children: List.generate(
         5,
             (index) {
-
           int randomIndex = usedRandom[i];
           i++;
-          // Her bir kutu için ayrı bir rastgele indeks al
 
+          bool isMatchedLeft = matchedPairsLeft.contains(index);
+          bool isMatchedRight = matchedPairsRight.contains(randomIndex);// Sadece kutunun kendisinin eşleşip eşleşmediğini kontrol et
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: 170.0,
-              height: 60.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.blueGrey, width: 2.0),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Center(
-                child: Text(
-                  isLeftColumn ? wordPairs[index].word : wordPairs[randomIndex]
-                      .meaning,
+            child: GestureDetector(
+              onTap: () {
+                if (isLeftColumn) {
+                  setState(() {
+                    selectedWordIndex = index;
+                  });
+                } else {
+                  if (selectedWordIndex != -1 &&
+                      wordPairs[selectedWordIndex].word ==
+                          wordPairs[randomIndex].word &&
+                      (!isMatchedRight || !isMatchedLeft)) {
+                    setState(() {
+                      matchedPairsLeft.add(selectedWordIndex);
+                      matchedPairsRight.add(randomIndex);
+                      selectedWordIndex = -1;
+                    });
+                  } else {
+                    setState(() {
+                      selectedWordIndex = -1;
+                    });
+                  }
+                }
+              },
+              child: Transform(
+                transform: Matrix4.translationValues(
+                    0.0, 0.0, -10.0 * (1 - (selectedWordIndex == index && selectedWordIndex != -1 ? 1.0 : 0.0))),
+                child: Container(
+                  width: 170.0,
+                  height: 60.0,
+                  decoration: BoxDecoration(
+                    color: (isLeftColumn && isMatchedLeft) || (!isLeftColumn && isMatchedRight)
+                        ? Colors.green
+                        : (isLeftColumn && selectedWordIndex == index
+                        ? Colors.white38
+                        : Colors.white),
+                    border: Border.all(color: Colors.blueGrey, width: 2.0),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Center(
+                    child: Text(
+                      isLeftColumn ? wordPairs[index].word : wordPairs[randomIndex].meaning,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -187,25 +221,20 @@ class _MatchWordsState extends State<MatchWords> {
       ),
     );
   }
+
+
+
+
+
 }
 
-class WordPair {
+  class WordPair {
 
   String word;
   String meaning;
 
   WordPair({required this.word, required this.meaning});
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
 
-    return other is WordPair && other.word == word && other.meaning == meaning;
-  }
-
-  @override
-  int get hashCode => word.hashCode ^ meaning.hashCode;
 
 }
-
-
