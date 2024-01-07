@@ -72,7 +72,7 @@ class MakeSentencesScreen extends StatefulWidget {
 }
 
 class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
-  List<String> words = ["I", "love", "play", "computer","ve","games","and"];
+  List<String> words = ["I", "love", "play", "computer"];
   int currentIndex = 0;
 
   @override
@@ -92,17 +92,15 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
         body: Stack(
           alignment: Alignment.center,
           children: <Widget>[
+            // Gif ekleyin
+            Positioned(
+              top: 100,
+              child: Image.asset('assets/catanimation.gif'), // Gif ekledik
+            ),
             // Column ekleyerek Cümleyi ve ilk çizgiyi bir araya getir
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Cümleyi göster
-
-                Positioned(
-                  child: Image.asset('assets/catanimation.gif'),
-                ),
-
-
                 // İlk çizgi
                 Container(
                   width: MediaQuery.of(context).size.width - 40,
@@ -110,25 +108,42 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                     color: Colors.white,
                     height: 50,
                     thickness: 2,
-
                   ),
                 ),
-                // İlk çizgi
+
+
+
+                // Cümleyi göster
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     words.join(" "),
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
-                    textAlign: TextAlign.center, // Bu satırı ekledik
+                    textAlign: TextAlign.center,
                   ),
                 ),
+                // İkinci çizgi
                 Container(
                   width: MediaQuery.of(context).size.width - 40,
                   child: Divider(
                     color: Colors.white,
                     height: 50,
                     thickness: 2,
-
+                  ),
+                ),
+                // İkinci çizgi
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Ben oyun oynamayı severim ve arkadaşlarımda",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.visible,
+                    maxLines: null,
                   ),
                 ),
               ],
@@ -136,34 +151,37 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
             // Kelimeleri göster
             Positioned(
               bottom: 20,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(
-                  words.length,
-                      (index) => buildAnswerBox(index),
-                ),
-              ),
-            ),
-            // İkinci çizgi
-            Positioned(
-              top: 60,
-              child: Container(
-                width: MediaQuery.of(context).size.width - 40,
-                child: Text(
-                  "Ben oyun oynamayı severim ve arkadaşlarımda",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                    color: Colors.white,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: List.generate(
+                      words.length,
+                          (index) => buildAnswerBox(index),
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.visible, // Kelimeler sığmazsa devamını göster
-                  maxLines: null, // Satır sayısı sınırsız olsun
-                ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: List.generate(
+                      words.length,
+                          (index) => buildAnswerBox(index),
+                    ),
+                  ),
+                  SizedBox(height:10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: List.generate(
+                      words.length,
+                          (index) => buildAnswerBox(index),
+                    ),
+                  )
+                ],
               ),
             ),
           ],
         ),
+
 
       ),
     );
@@ -177,8 +195,8 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
         });
       },
       child: Container(
-        width: 60,
-        height: 60,
+        width: MediaQuery.of(context).size.width / 5,
+        height: 30,
         decoration: BoxDecoration(
           color: currentIndex == index ? Colors.green : Colors.white,
           borderRadius: BorderRadius.circular(10),
