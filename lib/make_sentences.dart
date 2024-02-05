@@ -81,8 +81,7 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
 
   //kutularda kullanılmak üzere keliemelri içerecek listeler
   List<String> selectedSentenceWords = [];
-  List<String> randomWords = [];
-  List<bool> isDeleteCalledList = [false, false, false]; // Her satır için bayrakları içeren liste
+  TextEditingController userTextController = TextEditingController();
 
 
 
@@ -90,6 +89,8 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
   void initState() {
     super.initState();
     loadSentences();
+
+
   }
 
   Future<void> loadSentences() async {
@@ -98,45 +99,22 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
 
     // Örnek olarak ilk cümleyi seçtik, istediğiniz başka bir algoritma kullanabilirsiniz.
     Random random = new Random();
-    int sentencesIndex  =random.nextInt(sentences.length);
-    String selectedSentence = sentences[130];
+    int sentencesIndex = random.nextInt(sentences.length);
+    String selectedSentence = sentences[sentencesIndex];
     //131 --> denediğim cümle indeksi
 
     // Seçilen cümleyi kelimelere ayırarak listeye ekle
     selectedSentenceWords = selectedSentence.split(' ');
     selectedSentenceWords.shuffle();
 
-    // Diğer cümlelerden rastgele kelimeleri seç
-    randomWords = getRandomWords(sentences, selectedSentenceWords.length);
 
-    // İlk liste karışık, ikinci liste rastgele seçilmiş kelimelerle dolduruldu
     setState(() {});
   }
 
 
 
 
-  List<String> getRandomWords(List<String> sentences, int count) {
-    List<String> result = [];
-    Random random = Random();
-    result.addAll(selectedSentenceWords);
 
-    while (result.length < 12) {
-      String randomWord;
-      do {
-        // Rastgele bir cümle seç
-        String randomSentence = sentences[random.nextInt(sentences.length)];
-        // Cümleyi kelimelere ayır ve rastgele bir kelime seç
-        List<String> randomSentenceWords = randomSentence.split(' ');
-        randomWord = randomSentenceWords[random.nextInt(randomSentenceWords.length)];
-      } while (result.contains(randomWord)); // Aynı kelimeyi iki kez seçmemek için kontrol
-
-      result.add(randomWord);
-    }
-    result.shuffle();
-
-    return result;
-  }
 
 
 
@@ -153,7 +131,9 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
           title: Center(
             child: Text(
               'Cümle Kurma Oyunu',
-              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 30, color: Colors.white),
+              style: TextStyle(fontWeight: FontWeight.w300,
+                  fontSize: 30,
+                  color: Colors.white),
             ),
           ),
           backgroundColor: Colors.blue[900],
@@ -172,7 +152,10 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
               children: [
                 // İlk çizgi
                 Container(
-                  width: MediaQuery.of(context).size.width - 40,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width - 40,
                   child: Divider(
                     color: Colors.white,
                     height: 50,
@@ -181,19 +164,23 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                 ),
 
 
-
                 // Cümleyi göster
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     words.join(" "),
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
+                    style: TextStyle(color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 // İkinci çizgi
                 Container(
-                  width: MediaQuery.of(context).size.width - 40,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width - 40,
                   child: Divider(
                     color: Colors.white,
                     height: 50,
@@ -217,39 +204,39 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                 ),
               ],
             ),
-            // Kelimeleri göster
             Positioned(
-              bottom: 20,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: List.generate(
-                      4,
-                          (index) => buildAnswerBox(index,0),
+              bottom: 10,
+              height: 90,
+              width: 300,
+              child: Container(
+                child: Column(
+                  children: [
+                    TextField(
+                      style: TextStyle(color: Colors.white,),
+                      controller: userTextController,
+                      decoration: InputDecoration(
+                        suffixIcon: Icon(Icons.send,color: Colors.yellow,),
+                        hintText: 'Metni buraya girin',
+                        hintStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.blue,
+                              width: 2),
+                        ),
+                      ),
                     ),
-                  ),
-
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                    children: List.generate(
-                      4,
-                          (index) => buildAnswerBox(index,1),
-                    ),
-                  ),
-                  SizedBox(height:10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: List.generate(
-                      4,
-                          (index) => buildAnswerBox(index,2),
-                    ),
-                  )
-                ],
+                  ],
+                ),
               ),
-            ),
+            )
+
           ],
         ),
 
@@ -257,70 +244,4 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
       ),
     );
   }
-
-
-
-
-
-  Widget buildAnswerBox(int index,int counter) {
-    /*if (index < 0 || index >= selectedSentenceWords.length + randomWords.length) {
-      // İndeks sınırların dışında, boş bir konteyner döndür
-      return Container();
-    }*/
-
-    if (randomWords.length > 4 && counter != 0 && !isDeleteCalledList[counter]) {
-      //randomWords = deleteFirst4Words(randomWords);
-      deleteFirst4Words(randomWords);
-      isDeleteCalledList[counter] = true; // delete fonksiyonunun bir kez çağrıldığını belirt
-    }
-
-    String word;
-    word = randomWords[index];
-
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          currentIndex = index;
-        });
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.width / 5,  // 4 sütun
-        height: 30,
-        decoration: BoxDecoration(
-          color: currentIndex == index ? Colors.green : Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        margin: EdgeInsets.all(5),
-        child: Center(
-          child: Text(
-            word,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 9 < selectedSentenceWords[index].length ? 12 : 15,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-
-
-  /*List<String> deleteFirst4Words(List<String> randomWords) {
-    for (int i = 0; i < 4; i++) {
-      randomWords.removeAt(i);
-    }
-    return randomWords;
-  }*/
-
-
-  List<String> deleteFirst4Words(List<String> randomWords) {
-    if (randomWords.length >= 4) {
-      randomWords.removeRange(0, 4);
-    }
-    return randomWords;
-  }
-
-
-
 }
