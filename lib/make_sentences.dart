@@ -19,6 +19,8 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
 
   //kutularda kullanılmak üzere keliemelri içerecek listeler
   List<String> selectedSentenceWords = [];
+  //bu liste kalp ikonlarının takibi için kullanılacak
+  List<bool> favoriteIcons = [true,true,true,true,true];
   TextEditingController userTextController = TextEditingController();
   late String selectedSentence;
   String userInput = "Girilen Cümle";
@@ -26,6 +28,11 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
   bool isDecided = false;
   // Kullanıcının girdiği cümlenin doğruluğunu tutmak için
   bool isCorrect = false;
+  //kulanıcının skorunu tutmak için bu eğişkeni kullanacağız
+  int score = 0;
+  int tempetureScore = 0;
+  String selectedSentenceString =  "";
+
 
 
 
@@ -49,7 +56,10 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
 
     // Seçilen cümleyi kelimelere ayırarak listeye ekle
     selectedSentenceWords = selectedSentence.split(' ');
-    //selectedSentenceWords.shuffle();
+    tempetureScore = selectedSentenceWords.length;
+
+    selectedSentenceString = selectedSentenceWords.sublist(currentIndex).join(" ");
+
 
 
     setState(() {});
@@ -90,57 +100,14 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
             Positioned(
               top: 20,
               left: 10,
-              child: Row(
-                children: [
-                  Container(
-                    width: 30, // İkonun genişliği
-                    height: 40, // İkonun yüksekliği
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                      size: 30, // İkonun boyutu
-                    ),
-                  ),
-                   // İkonlar arasında boşluk bırakmak için
-                  Container(
-                    width: 30, // İkonun genişliği
-                    height: 40, // İkonun yüksekliği
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                      size: 30, // İkonun boyutu
-                    ),
-                  ),
-                   // İkonlar arasında boşluk bırakmak için
-                  Container(
-                    width: 30, // İkonun genişliği
-                    height: 40, // İkonun yüksekliği
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                      size: 30, // İkonun boyutu
-                    ),
-                  ),
-                  Container(
-                    width: 30, // İkonun genişliği
-                    height: 40, // İkonun yüksekliği
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                      size: 30, // İkonun boyutu
-                    ),
-                  ),
-                  Container(
-                    width: 30, // İkonun genişliği
-                    height: 40, // İkonun yüksekliği
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                      size: 30, // İkonun boyutu
-                    ),
-                  ),
-                ],
-              ),
+              child: Row(//listeye bakılara kalplerin içerisi boşaltılacak
+                    children: List.generate(favoriteIcons.length, (index) {
+                      return favoriteIcons[index]
+                          ? Icon(Icons.favorite, color: Colors.red)
+                          : Icon(Icons.favorite_border, color: Colors.red);
+                    }),
+                  )
+
             ),
 
             // Gif ekleyin
@@ -183,7 +150,7 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                   child: Opacity(
                     opacity: isDecided ? 1.0 : 0.0,
                     child: Text(
-                      selectedSentenceWords.join(" "),
+                      selectedSentenceString,
                       style: TextStyle(
                         color: isCorrect ? Colors.green : Colors.red,
                         fontWeight: FontWeight.bold,
@@ -231,7 +198,16 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      // Düğmeye tıklandığında yapılacak işlemler
+                      // bir kelime gösterilecek ve geçici skordan bir düşülecek
+                      if(tempetureScore > 0){
+                        tempetureScore--;
+                      }
+                      setState(() {
+                        isDecided = true;
+                        currentIndex +=1;
+                        selectedSentenceString = selectedSentenceWords.sublist(0,currentIndex).join(" ");
+                      });
+
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.yellow[700], // ElevatedButton rengi (sarısı)
@@ -259,6 +235,7 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                       isDecided = false;
                       userInput = "Girilen Cümle";
                       userTextController.clear(); // TextField'ı temizle
+                      currentIndex = 0;//görünen kelimeleri yeniden sıfır yapmak için
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green[700], // ElevatedButton rengi (sarısı)
@@ -308,6 +285,29 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                             isDesiredSentence(userInput, selectedSentence);
                             setState(() {
                               isCorrect = result;
+                              //sonuç yanlış ise kalplerin içerisi boşaltılmalı
+                              // ve eğer hepsi boşsa skor sıfırlanıp yeniden doldurulmalı
+                              if(!result){
+                                for (int i = favoriteIcons.length - 1; i >= 0; i--) {
+                                  if (favoriteIcons[i]) {
+                                    favoriteIcons[i] = false;
+                                    //daha sonra kullanıcı doğru olanı yazsa bile puan eklememek için
+                                    tempetureScore = 0;
+                                    if(i == 0){
+                                      //skor sıfırlandı
+                                      score = 0;
+                                      //bütün kalpler yenilendi
+                                      favoriteIcons = [true,true,true,true,true];
+                                    }
+                                    break;
+                                  }
+
+                                }
+                              }
+                              else{
+                                //eğer kullanıcının girdiği cevap doğruysa
+                              }
+
                               isDecided = true;
                             });
                           },
