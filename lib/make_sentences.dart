@@ -1,68 +1,6 @@
-/*import 'package:flutter/material.dart';
-
-
-void main() {
-  runApp(MakeSentencesScreen());
-}
-
-class MakeSentencesScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.blue[900],
-        appBar: AppBar(
-          title: Center(
-            child:  Text(
-              'Cümle Kurma Oyunu',
-              style: TextStyle(fontWeight: FontWeight.w300, fontSize: 30, color: Colors.white),
-            ),
-          ),
-          backgroundColor: Colors.blue[900],
-        ),
-        body: Column(
-          children: <Widget>[
-            Text(
-                'Ben oyun onamayı severim',
-              style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-            ),
-            // İlk çizgi
-            Padding(
-              padding: EdgeInsets.only(top: 200), // Üstte 20 piksel boşluk bırakır
-              child: Divider(
-                color: Colors.white,
-                height: 50,
-                thickness: 2,
-                indent: 20,
-                endIndent: 20,
-              ),
-            ),
-            // İkinci çizgi
-            Padding(
-              padding: EdgeInsets.only(top: 20), // Üstte 20 piksel boşluk bırakır
-              child: Divider(
-                color: Colors.white,
-                height: 50,
-                thickness: 2,
-                indent: 20,
-                endIndent: 20,
-              ),
-            ),
-            // Diğer çizgiler buraya gelebilir
-          ],
-        ),
-      ),
-    );
-  }
-}*/
-
-
-
 
 import 'dart:convert';
 import 'dart:math';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -82,6 +20,12 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
   //kutularda kullanılmak üzere keliemelri içerecek listeler
   List<String> selectedSentenceWords = [];
   TextEditingController userTextController = TextEditingController();
+  late String selectedSentence;
+  String userInput = "Girilen Cümle";
+  //en başta istenilen cümlenin görünmez olması için
+  bool isDecided = false;
+  // Kullanıcının girdiği cümlenin doğruluğunu tutmak için
+  bool isCorrect = false;
 
 
 
@@ -100,12 +44,12 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
     // Örnek olarak ilk cümleyi seçtik, istediğiniz başka bir algoritma kullanabilirsiniz.
     Random random = new Random();
     int sentencesIndex = random.nextInt(sentences.length);
-    String selectedSentence = sentences[sentencesIndex];
+    selectedSentence = sentences[sentencesIndex];
     //131 --> denediğim cümle indeksi
 
     // Seçilen cümleyi kelimelere ayırarak listeye ekle
     selectedSentenceWords = selectedSentence.split(' ');
-    selectedSentenceWords.shuffle();
+    //selectedSentenceWords.shuffle();
 
 
     setState(() {});
@@ -127,6 +71,8 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.blue[900],
+        //sanal klavye açıldığında nesnelerin kaymasını önlemek için
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Center(
             child: Text(
@@ -141,6 +87,62 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
         body: Stack(
           alignment: Alignment.center,
           children: <Widget>[
+            Positioned(
+              top: 20,
+              left: 10,
+              child: Row(
+                children: [
+                  Container(
+                    width: 30, // İkonun genişliği
+                    height: 40, // İkonun yüksekliği
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 30, // İkonun boyutu
+                    ),
+                  ),
+                   // İkonlar arasında boşluk bırakmak için
+                  Container(
+                    width: 30, // İkonun genişliği
+                    height: 40, // İkonun yüksekliği
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 30, // İkonun boyutu
+                    ),
+                  ),
+                   // İkonlar arasında boşluk bırakmak için
+                  Container(
+                    width: 30, // İkonun genişliği
+                    height: 40, // İkonun yüksekliği
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 30, // İkonun boyutu
+                    ),
+                  ),
+                  Container(
+                    width: 30, // İkonun genişliği
+                    height: 40, // İkonun yüksekliği
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 30, // İkonun boyutu
+                    ),
+                  ),
+                  Container(
+                    width: 30, // İkonun genişliği
+                    height: 40, // İkonun yüksekliği
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 30, // İkonun boyutu
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
             // Gif ekleyin
             Positioned(
               top: 100,
@@ -163,18 +165,35 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                   ),
                 ),
 
-
                 // Cümleyi göster
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(1.0),
                   child: Text(
-                    words.join(" "),
+                    userInput,
                     style: TextStyle(color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 24),
                     textAlign: TextAlign.center,
                   ),
                 ),
+
+                // Cümleyi göster
+                Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: Opacity(
+                    opacity: isDecided ? 1.0 : 0.0,
+                    child: Text(
+                      selectedSentenceWords.join(" "),
+                      style: TextStyle(
+                        color: isCorrect ? Colors.green : Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+
                 // İkinci çizgi
                 Container(
                   width: MediaQuery
@@ -188,6 +207,7 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                   ),
                 ),
                 // İkinci çizgi
+                SizedBox(width: 20),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -204,6 +224,66 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                 ),
               ],
             ),
+            SizedBox(width: 20),
+            Positioned(
+              bottom: 180,
+              child: Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Düğmeye tıklandığında yapılacak işlemler
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.yellow[700], // ElevatedButton rengi (sarısı)
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.lightbulb,
+                          color: Colors.white, // Ampul ikonunun rengi (beyaz)
+                        ),
+                        SizedBox(width: 8), // Ikon ile metin arasında boşluk bırakmak için
+                        Text(
+                          "İpucu Al",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      loadSentences();
+                      isDecided = false;
+                      userInput = "Girilen Cümle";
+                      userTextController.clear(); // TextField'ı temizle
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[700], // ElevatedButton rengi (sarısı)
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.update,
+                          color: Colors.white, // Ampul ikonunun rengi (beyaz)
+                        ),
+                        SizedBox(width: 8), // Ikon ile metin arasında boşluk bırakmak için
+                        Text(
+                          "Sonraki Cümle",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+
             Positioned(
               bottom: 10,
               height: 90,
@@ -214,9 +294,26 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                     TextField(
                       style: TextStyle(color: Colors.white,),
                       controller: userTextController,
+                      onChanged: (text) {
+                        // Girilen metni 24 boyutlu bir metne dönüştür
+                        setState(() {
+                          userInput = text;
+                        });
+                      },
                       decoration: InputDecoration(
-                        suffixIcon: Icon(Icons.send,color: Colors.yellow,),
-                        hintText: 'Metni buraya girin',
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            //girilen metin istenilen metinle karşılaştırılmak üzerefonksiyona gönderiliyor
+                            bool result =
+                            isDesiredSentence(userInput, selectedSentence);
+                            setState(() {
+                              isCorrect = result;
+                              isDecided = true;
+                            });
+                          },
+                          icon: Icon(Icons.send, color: Colors.white),
+                        ),
+                        hintText: 'Cümleyi buraya girin',
                         hintStyle: TextStyle(
                           color: Colors.white,
                         ),
@@ -235,13 +332,44 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                   ],
                 ),
               ),
-            )
-
+            ),
           ],
         ),
-
-
       ),
     );
   }
+
+  //bu fonksiyon kullanıcın girdiği cüce ile olması gereken cümleyi kıyas ediyor
+  bool isDesiredSentence(String input, String desiredSentence) {
+    // Girdiğimiz cümleleri küçük harflere dönüştürüyoruz
+    //ve başlarındaki ve sonlarındaki boşlukları kaldırıyoruz
+    String lowercaseInput = input.toLowerCase().trim();
+    String lowercaseDesired = desiredSentence.toLowerCase().trim();
+
+    // Girdi cümlesinin içerip içermediğini kontrol ediyoruz
+    // İstenilen cümleyi ve girdi cümlesini boşluklara göre ayırıyoruz
+    List<String> inputWords = lowercaseInput.split(" ");
+    List<String> desiredWords = lowercaseDesired.split(" ");
+
+    // Girdi cümlesinde fazladan kelimeler varsa, istenilen cümle tam olarak eşleşmiyor demektir
+    if (inputWords.length > desiredWords.length) {
+      //burada bulunan cümlenin hangi kelimesi veya harfi fazlaysa o kırım kırmızı oalrak gösterlmeli
+      return false;
+    }
+
+    // Girdi cümlesindeki her kelime için kontrol ediyoruz
+    for (String word in desiredWords) {
+      // Eğer kelime girdi cümlesinde yoksa, istenilen cümle tam olarak eşleşmiyor demektir
+      if (!inputWords.contains(word)) {
+        return false;
+      }
+    }
+
+    //eğer doğruysa da o cümle yeşil renkle kullancın girdiği cümlenin alt kısmında gösterilmeli
+    // Tüm kelimeler girdi cümlesinde bulunuyorsa, istenilen cümle tam olarak eşleşiyor demektir
+    return true;
+  }
+
+
+
 }
