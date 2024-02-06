@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MakeSentencesScreen());
@@ -30,19 +31,26 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
   bool isCorrect = false;
   //kulanıcının skorunu tutmak için bu eğişkeni kullanacağız
   int score = 0;
-  int tempetureScore = 0;
-  String selectedSentenceString =  "";
-
-
-
+  int tempetureScore = 0;//gerçek skorun üstüne eklemek için her kelimeye özel olarak kullanılıyor
+  String selectedSentenceString =  "";//ipucu butonu için kullanlıyor
+  int bestScore = 0;
+  SharedPreferences? prefs;
 
   @override
   void initState() {
     super.initState();
     loadSentences();
-
-
+    getDataFromSharedPreferences();
   }
+
+  getDataFromSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      bestScore = prefs?.getInt("bestScore") ?? 0;
+    });
+  }
+
+
 
   Future<void> loadSentences() async {
     String content = await DefaultAssetBundle.of(context).loadString('assets/sentences.txt');
@@ -84,7 +92,7 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
         //sanal klavye açıldığında nesnelerin kaymasını önlemek için
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Center(
+          title: const Center(
             child: Text(
               'Cümle Kurma Oyunu',
               style: TextStyle(fontWeight: FontWeight.w300,
@@ -107,7 +115,19 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                           : Icon(Icons.favorite_border, color: Colors.red);
                     }),
                   )
+                ),
 
+            Positioned(
+              right: 10,
+              top: 20,
+              child: Row(
+              children: [
+                Text("PUAN : $score"
+                    "\nBEST : $bestScore",style: TextStyle(color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),),
+              ],
+            ),
             ),
 
             // Gif ekleyin
@@ -210,7 +230,9 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
 
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow[700], // ElevatedButton rengi (sarısı)
+                      backgroundColor: Colors.yellow[700],// ElevatedButton rengi (sarısı)
+                      elevation: 4,
+                      shadowColor: Colors.black,
                     ),
                     child: Row(
                       children: [
@@ -238,7 +260,9 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                       currentIndex = 0;//görünen kelimeleri yeniden sıfır yapmak için
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[700], // ElevatedButton rengi (sarısı)
+                      backgroundColor: Colors.green[700],// ElevatedButton rengi (sarısı)
+                      elevation: 4,
+                      shadowColor: Colors.black,
                     ),
                     child: Row(
                       children: [
@@ -285,6 +309,11 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                             isDesiredSentence(userInput, selectedSentence);
                             setState(() {
                               isCorrect = result;
+                              //eper güncel skor en yüksek skordan yükseğ çıkmışsa güncellmee yapacağız
+                              if(score > bestScore){
+                                prefs?.setInt("bestScore", score);//yeni en yüksek skor belirlendi
+                              }
+
                               //sonuç yanlış ise kalplerin içerisi boşaltılmalı
                               // ve eğer hepsi boşsa skor sıfırlanıp yeniden doldurulmalı
                               if(!result){
@@ -298,6 +327,7 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                                       score = 0;
                                       //bütün kalpler yenilendi
                                       favoriteIcons = [true,true,true,true,true];
+
                                     }
                                     break;
                                   }
@@ -306,6 +336,13 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                               }
                               else{
                                 //eğer kullanıcının girdiği cevap doğruysa
+                                score += tempetureScore;//geçici puan asıl puanın üzerine eklendi
+                                //kullancıya cümlenin tamamı gösteriliyor
+                                selectedSentenceString = selectedSentenceWords.join(" ");
+                                if(score > bestScore){
+                                  prefs?.setInt("bestScore", score);//yeni en yüksek skor belirlendi
+                                  bestScore = prefs?.getInt("bestScore") ?? 0;
+                                }
                               }
 
                               isDecided = true;
