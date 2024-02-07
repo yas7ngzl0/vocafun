@@ -8,22 +8,24 @@ void main() {
   runApp(MakeSentencesScreen());
 }
 
-class MakeSentencesScreen extends StatefulWidget {
+class MakeSentencesScreen extends StatefulWidget{
   @override
   _MakeSentencesScreenState createState() => _MakeSentencesScreenState();
 }
 
-class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
+class _MakeSentencesScreenState extends State<MakeSentencesScreen> with SingleTickerProviderStateMixin{
   List<String> words = ["I", "love", "play", "computer"," "," "," "," "];
   int currentIndex = 0;
 
 
   //kutularda kullanılmak üzere keliemelri içerecek listeler
   List<String> selectedSentenceWords = [];
+  List<String> selectedTurkishSentenceWords = [];
   //bu liste kalp ikonlarının takibi için kullanılacak
   List<bool> favoriteIcons = [true,true,true,true,true];
   TextEditingController userTextController = TextEditingController();
   late String selectedSentence;
+  late String selectedTurkishSentence;
   String userInput = "Girilen Cümle";
   //en başta istenilen cümlenin görünmez olması için
   bool isDecided = false;
@@ -35,12 +37,17 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
   String selectedSentenceString =  "";//ipucu butonu için kullanlıyor
   int bestScore = 0;
   SharedPreferences? prefs;
+  late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
     loadSentences();
     getDataFromSharedPreferences();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    )..repeat(reverse: true);
   }
 
   getDataFromSharedPreferences() async {
@@ -55,15 +62,20 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
   Future<void> loadSentences() async {
     String content = await DefaultAssetBundle.of(context).loadString('assets/sentences.txt');
     List<String> sentences = LineSplitter.split(content).toList();
+    //türkçe cümleler içinde dosyadan okuma yapıyoruz
+    String turkishContent = await DefaultAssetBundle.of(context).loadString('assets/turkishsentences.txt');
+    List<String> turkishSentences = LineSplitter.split(turkishContent).toList();
 
     // Örnek olarak ilk cümleyi seçtik, istediğiniz başka bir algoritma kullanabilirsiniz.
     Random random = new Random();
     int sentencesIndex = random.nextInt(sentences.length);
     selectedSentence = sentences[sentencesIndex];
+    selectedTurkishSentence = turkishSentences[sentencesIndex];
     //131 --> denediğim cümle indeksi
 
     // Seçilen cümleyi kelimelere ayırarak listeye ekle
     selectedSentenceWords = selectedSentence.split(' ');
+    selectedTurkishSentenceWords = selectedTurkishSentence.split(' ');
     tempetureScore = selectedSentenceWords.length;
 
     selectedSentenceString = selectedSentenceWords.sublist(currentIndex).join(" ");
@@ -155,13 +167,31 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                 // Cümleyi göster
                 Padding(
                   padding: const EdgeInsets.all(1.0),
-                  child: Text(
-                    userInput,
-                    style: TextStyle(color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24),
-                    textAlign: TextAlign.center,
+                  child : RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: userInput,
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),
+                        ),
+                        WidgetSpan(
+                          child: AnimatedBuilder(
+                            animation: _animationController,
+                            builder: (context, child) {
+                              return Opacity(
+                                opacity: _animationController.value,
+                                child: Text(
+                                  '|',
+                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
+
                 ),
 
                 // Cümleyi göster
@@ -197,16 +227,18 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                 SizedBox(width: 20),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Ben oyun oynamayı severim ve arkadaşlarımda",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20,
-                      color: Colors.white,
+                  child: Center(
+                    child: Text(
+                      selectedTurkishSentenceWords.join(" "),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.visible,
+                      maxLines: null,
                     ),
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.visible,
-                    maxLines: null,
                   ),
                 ),
               ],
@@ -255,6 +287,7 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
                     onPressed: () {
                       loadSentences();
                       isDecided = false;
+                      isCorrect = false;
                       userInput = "Girilen Cümle";
                       userTextController.clear(); // TextField'ı temizle
                       currentIndex = 0;//görünen kelimeleri yeniden sıfır yapmak için
@@ -383,6 +416,11 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
     String lowercaseInput = input.toLowerCase().trim();
     String lowercaseDesired = desiredSentence.toLowerCase().trim();
 
+    // Noktalama işaretlerini kaldırma
+    final RegExp punctuationPattern = RegExp(r'[^\w\s]');
+    lowercaseInput = lowercaseInput.replaceAll(punctuationPattern, '');
+    lowercaseDesired = lowercaseDesired.replaceAll(punctuationPattern, '');
+
     // Girdi cümlesinin içerip içermediğini kontrol ediyoruz
     // İstenilen cümleyi ve girdi cümlesini boşluklara göre ayırıyoruz
     List<String> inputWords = lowercaseInput.split(" ");
@@ -390,7 +428,7 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
 
     // Girdi cümlesinde fazladan kelimeler varsa, istenilen cümle tam olarak eşleşmiyor demektir
     if (inputWords.length > desiredWords.length) {
-      //burada bulunan cümlenin hangi kelimesi veya harfi fazlaysa o kırım kırmızı oalrak gösterlmeli
+      // Burada bulunan cümlenin hangi kelimesi veya harfi fazlaysa o kırım kırmızı olarak gösterilmeli
       return false;
     }
 
@@ -402,10 +440,10 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> {
       }
     }
 
-    //eğer doğruysa da o cümle yeşil renkle kullancın girdiği cümlenin alt kısmında gösterilmeli
-    // Tüm kelimeler girdi cümlesinde bulunuyorsa, istenilen cümle tam olarak eşleşiyor demektir
+    // Eğer herhangi bir eşleşme bulunmazsa, istenilen cümle tam olarak eşleşiyor demektir
     return true;
   }
+
 
 
 

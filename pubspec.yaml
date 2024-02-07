@@ -79,6 +79,7 @@ flutter:
     - assets/levelc2turkish.txt
     - assets/catanimation.gif
     - assets/sentences.txt
+    - assets/turkishsentences.txt
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

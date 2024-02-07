@@ -157,3 +157,272 @@ Does it work
 Did I forget something
 Should we go home
 Could you lend me some money
+I am a student.
+He is tall.
+She is my friend.
+They are happy.
+We have a cat.
+It is raining.
+You can speak English.
+I like chocolate.
+She wants to go home.
+They are from Turkey.
+He likes to play football.
+She is reading a book.
+I have a pencil.
+We are going to the park.
+He has a red car.
+She is wearing a blue dress.
+They live in a big house.
+We are eating breakfast.
+I am listening to music.
+She is cooking dinner.
+They are watching TV.
+He is sleeping.
+She is singing a song.
+I am going to school.
+They are playing games.
+We are swimming in the pool.
+He is riding a bike.
+She is dancing.
+I am learning English.
+They are studying for the exam.
+We are taking a walk.
+He is working in the garden.
+She is talking on the phone.
+I am waiting for the bus.
+They are laughing.
+We are shopping at the mall.
+He is running in the park.
+She is drawing a picture.
+I am cooking lunch.
+They are playing with their toys.
+We are visiting our grandparents.
+He is helping his friend.
+She is cleaning her room.
+I am watering the plants.
+They are having a party.
+We are baking a cake.
+He is fixing the car.
+She is brushing her teeth.
+I am writing a letter.
+They are watching a movie.
+We are waiting for the train.
+He is playing the guitar.
+She is feeding the cat.
+I am riding the bus.
+They are painting the walls.
+We are hiking in the mountains.
+He is taking a shower.
+She is washing the dishes.
+I am riding a horse.
+They are playing soccer.
+We are cleaning the house.
+He is reading a newspaper.
+She is taking a nap.
+I am mowing the lawn.
+They are planting flowers.
+We are walking the dog.
+He is fishing by the lake.
+She is writing in her journal.
+I am painting a picture.
+They are flying a kite.
+We are picnicking in the park.
+He is jumping rope.
+She is skipping rocks.
+I am climbing a tree.
+They are playing hide and seek.
+We are riding roller coasters.
+He is playing tag.
+She is blowing bubbles.
+I am building a sandcastle.
+They are playing hopscotch.
+We are playing board games.
+He is playing with his toys.
+She is playing dress-up.
+I am playing with dolls.
+They are playing catch.
+We are playing cards.
+He is playing video games.
+She is playing the piano.
+I am playing the flute.
+They are playing the drums.
+We are playing basketball.
+He is playing baseball.
+She is playing tennis.
+I am playing soccer.
+They are playing golf.
+We are playing volleyball.
+He is playing badminton.
+She is playing table tennis.
+I am playing cricket.
+They are playing rugby.
+She cooks delicious meals.
+He drives a fast car.
+They study hard for exams.
+We watch interesting movies.
+I play tennis every weekend.
+She works as a nurse.
+He speaks Spanish fluently.
+They travel to exotic places.
+We enjoy listening to music.
+She reads novels in her free time.
+He helps his neighbors with gardening.
+They clean their house regularly.
+I walk to the park every morning.
+She dances gracefully.
+He swims competitively.
+They play musical instruments.
+We eat healthy food.
+She paints beautiful landscapes.
+He fixes broken appliances.
+They meet friends for coffee.
+I write poems as a hobby.
+She volunteers at a local shelter.
+He attends language classes.
+They visit museums on weekends.
+We go camping in the summer.
+She designs websites for clients.
+He exercises at the gym.
+They discuss current events.
+We plan vacations together.
+She studies architecture at university.
+He explores new hiking trails.
+They organize charity events.
+I practice yoga for relaxation.
+She teaches English to children.
+He bakes delicious cakes.
+They attend concerts regularly.
+We plant flowers in our garden.
+She sketches portraits in her sketchbook.
+He repairs bicycles as a side job.
+They participate in community clean-ups.
+I take photographs of nature.
+She learns to play the guitar.
+He builds birdhouses in his workshop.
+They go for bike rides in the countryside.
+We try new recipes from around the world.
+She tutors students in math.
+He coaches a youth soccer team.
+They explore ancient ruins during vacations.
+I practice meditation for mindfulness.
+She attends art classes on weekends.
+He creates sculptures from recycled materials.
+They attend cooking workshops together.
+We hike in national parks.
+She organizes book club meetings.
+He volunteers at a local soup kitchen.
+They host dinner parties for friends.
+I attend photography exhibitions.
+She learns to sew her own clothes.
+He plays in a band with his friends.
+They go fishing at the lake.
+We participate in neighborhood watch programs.
+She practices martial arts for self-defense.
+He studies astronomy as a hobby.
+They go birdwatching in the forest.
+I attend dance classes for fitness.
+She volunteers at a homeless shelter.
+He participates in beach clean-up events.
+They take pottery classes together.
+We attend wine tasting events.
+She practices calligraphy as a hobby.
+He volunteers at an animal rescue center.
+They attend film festivals regularly.
+I learn to cook traditional dishes from different cultures.
+She volunteers at a community garden.
+He learns to play the piano.
+They attend workshops on sustainable living.
+We go on photography walks in the city.
+She practices mindfulness meditation daily.
+He participates in amateur theater productions.
+They learn to knit and crochet.
+I volunteer at a local environmental organization.
+She attends language exchange meetups.
+He participates in marathons for charity.
+They join a local choir.
+We attend cooking classes together.
+She learns to make pottery on a pottery wheel.
+He volunteers at a local museum.
+They take up rock climbing as a hobby.
+I attend painting classes for beginners.
+She participates in beach volleyball tournaments.
+He learns to juggle as a hobby.
+They attend wine and cheese tastings.
+We go on nature walks in the countryside.
+She volunteers at a wildlife rehabilitation center.
+He participates in community theater productions.
+They take up salsa dancing lessons.
+I attend gardening workshops.
+She practices tai chi for relaxation.
+He volunteers at a senior citizen center.
+They participate in local environmental clean-up campaigns.
+Do you enjoy cooking?
+Have you ever traveled abroad?
+Can you play a musical instrument?
+What kind of movies do you like?
+Do you have any hobbies?
+Are you learning a new language?
+Have you ever been to a concert?
+Do you like to read books?
+Have you ever tried skiing?
+What sports do you enjoy playing?
+Do you like to go hiking?
+Have you ever visited a museum?
+Can you swim?
+Do you enjoy going to the beach?
+Have you ever attended a theater performance?
+Do you like to watch documentaries?
+Have you ever participated in a marathon?
+Can you dance?
+Do you enjoy gardening?
+Have you ever gone camping?
+Do you like to attend parties?
+Have you ever volunteered for a cause?
+Can you speak more than one language?
+Do you enjoy going to art galleries?
+Have you ever tried rock climbing?
+Do you like to attend music festivals?
+Have you ever taken a cooking class?
+Can you ride a bicycle?
+Do you like to go for long walks?
+Have you ever tried yoga?
+Do you enjoy attending sports events?
+Have you ever participated in a charity event?
+Can you cook traditional dishes from your culture?
+Do you like to go to the gym?
+Have you ever tried pottery making?
+Do you enjoy attending wine tastings?
+Have you ever taken a dance class?
+Can you play a sport well?
+Do you like to go birdwatching?
+Have you ever participated in a book club?
+Do you enjoy attending outdoor concerts?
+Have you ever tried horseback riding?
+Can you sew or knit?
+Do you like to attend food festivals?
+Have you ever tried scuba diving?
+Do you enjoy attending craft fairs?
+Have you ever taken a photography class?
+Do you like to go on road trips?
+Have you ever attended a cooking competition?
+Do you enjoy going to the theater?
+Have you ever tried skydiving?
+Can you draw or paint?
+Do you like to go to flea markets?
+Have you ever tried surfing?
+Do you enjoy attending street festivals?
+Have you ever taken a language course abroad?
+Can you do a backflip?
+Do you like to go on bike rides?
+Have you ever tried bungee jumping?
+Do you enjoy attending cultural festivals?
+Have you ever taken a pottery class?
+Can you do magic tricks?
+Do you like to attend farmer's markets?
+Have you ever tried snowboarding?
+Do you enjoy attending wine and cheese tastings?
+Have you ever taken a painting class?
+Can you play chess?
+Do you like to go on nature walks?
+Have you ever tried ice skating?
