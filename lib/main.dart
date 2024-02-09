@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vocafun/make_sentences.dart';
 import 'package:vocafun/match_words.dart';
 import 'package:vocafun/second_page.dart';
+import 'package:vocafun/tabu.dart';
 import 'package:vocafun/word_game_screen.dart';
 
 void main() {
@@ -167,6 +168,13 @@ class MyStatefulWidget extends StatelessWidget {
             MaterialPageRoute(builder: (context) => MakeSentencesScreen()),
           );
         }
+        if(index == 2){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TabuScreen()),
+          );
+
+        }
         //bu kısma 2. indexteki işlemi ayz
         if(index == 3){
           Navigator.push(
@@ -174,6 +182,7 @@ class MyStatefulWidget extends StatelessWidget {
             MaterialPageRoute(builder: (context) => MatchWords()),
           );
         }
+
 
       },
       child: Container(
