@@ -61,7 +61,7 @@ class _MatchWordsState extends State<MatchWords> {
     Random random = Random();
 
     // Rastgele seçilecek kelime sayısı
-    int numberOfItemsToSelect = 5;
+    int numberOfItemsToSelect = 8;
 
     // Orijinal listeyi karıştırmadan rastgele seçim yap
     for (int i = 0; i < numberOfItemsToSelect; i++) {
@@ -95,7 +95,7 @@ class _MatchWordsState extends State<MatchWords> {
                 height: (MediaQuery
                     .of(context)
                     .size
-                    .height) * 0.5,
+                    .height) * 0.8,
                 width: (MediaQuery
                     .of(context)
                     .size
@@ -142,7 +142,7 @@ class _MatchWordsState extends State<MatchWords> {
 
   bool allWordsMatched() {
     // Tüm kelimeler eşleştirildi mi kontrol et
-    return matchedPairsLeft.length == 5 && matchedPairsRight.length == 5;
+    return matchedPairsLeft.length == 8 && matchedPairsRight.length == 8;
   }
 
   void getNewWords() {
@@ -162,8 +162,8 @@ class _MatchWordsState extends State<MatchWords> {
   List<int> generateUniqueNumbers() {
     Random random = Random();
 
-    while (usedRandom.length < 5) {
-      int newNumber = random.nextInt(5);
+    while (usedRandom.length < 8) {
+      int newNumber = random.nextInt(8);
 
       if (!usedRandom.contains(newNumber)) {
         usedRandom.add(newNumber);
@@ -180,7 +180,7 @@ class _MatchWordsState extends State<MatchWords> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: List.generate(
-        5,
+        8,
             (index) {
           int randomIndex = usedRandom[i];
           i++;
@@ -227,7 +227,10 @@ class _MatchWordsState extends State<MatchWords> {
                     0.0, 0.0, -10.0 * (1 - (selectedWordIndex == index && selectedWordIndex != -1 ? 1.0 : 0.0))),
                 child: Container(
                   width: 170.0,
-                  height: 60.0,
+                  height: (MediaQuery
+                      .of(context)
+                      .size
+                      .height) * 0.075,
                   decoration: BoxDecoration(
                     //eşleşen kelimeler doğru ise kutuların rengini yeşile çevir
                     color: (isLeftColumn && isMatchedLeft) || (!isLeftColumn && isMatchedRight)

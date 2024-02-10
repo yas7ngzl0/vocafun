@@ -78,6 +78,7 @@ class _TabuScreenState extends State<TabuScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.green[300],
         appBar: AppBar(
@@ -116,7 +117,10 @@ class _TabuScreenState extends State<TabuScreen> {
                 },
                 child: Container(
                   width: 200,
-                  height: 90,
+                  height: (MediaQuery
+                      .of(context)
+                      .size
+                      .height) * 0.1,
                   decoration: BoxDecoration(
                     color: backgroundColor,
                     border: Border.all(color: Colors.blueGrey.shade900, width: 2.0),

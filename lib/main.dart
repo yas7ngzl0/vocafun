@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       /*theme: ThemeData.light(), // Varsayılan tema
       darkTheme: ThemeData.dark(), // Koyu tema
       themeMode: ThemeMode.system, // Sistem temasını kullan*/
+      debugShowCheckedModeBanner: false,
       title: 'VocaFun',
 
       home: Scaffold(
@@ -126,7 +127,7 @@ class MyStatefulWidget extends StatelessWidget {
   final List<String> boxInfo = [
     'Karşına ingilizce kelimeler ve içlerinden bazı harfler ve aynı zamanda türkçe anlamlar çıkacak. Kelime bilgini test et',
     'Karşına bir cümlenin kelimeleri sıralanmamış bir şekilde gelecek ve senin o cümleyi sırlaman gerekecek ',
-    'Arkadaşlarınla beraber oynayabileceğin klasik bir tabu oyunu fakat ingilizce',
+    'Karşına çıkan 5 adet kelimeden diğerleri ile alakalı olmayanı seç!',
     'Kelimeleri anlamlarıyla eşleştirmeceğin eğlenceli bir oyun!',
   ];
 

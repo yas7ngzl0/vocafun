@@ -366,7 +366,33 @@ class _GameWidgetState extends State<GameWidget> {
                 ),
               ),
 
-            // Sağ üst köşedeki yıldız ikonu
+
+           /* Positioned(
+              bottom: 20,
+              left: (MediaQuery
+                  .of(context)
+                  .size
+                  .width) * 0.25,
+              child: Container(
+                width: 200,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: getBoxColor(widget.selectedLevel),
+                ),
+
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      "Bazı Kelimeler Çoğu Zaman Birden Çok Anlama Sahip Olduğundan "
+                          "Kelimelerin Anlamları Tam Olarak Eşleşmeyebilir",
+                      style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 10),
+                    ),
+                  ),
+                ),
+              ),
+            )*/
 
           ],
         ),

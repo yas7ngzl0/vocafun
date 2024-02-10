@@ -99,6 +99,7 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> with SingleTi
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.blue[900],
         //sanal klavye açıldığında nesnelerin kaymasını önlemek için
