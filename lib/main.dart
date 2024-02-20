@@ -4,6 +4,7 @@ import 'package:vocafun/match_words.dart';
 import 'package:vocafun/second_page.dart';
 import 'package:vocafun/tabu.dart';
 import 'package:vocafun/word_game_screen.dart';
+import 'package:vocafun/word_repait/word_repait_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.deepPurple[200],
+          backgroundColor: Colors.deepPurple[500],
           title: const Text('Welcome!',
             style: TextStyle(color: Colors.white),),
           elevation: 10.0,
@@ -52,14 +53,17 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            MyStatelessWidget('Aşagıdaki kutucuğa tıklayarak oyun '
-                '\nsayfasına gidebilirsiniz'),
-            MyStatefulWidget(),
-            //MyStatelessWidget('Stateless Widget 2'),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              MyStatelessWidget('Aşagıdaki kutucuğa tıklayarak oyun '
+                  '\nsayfasına gidebilirsiniz'),
+              MyStatefulWidget(),
+              //MyStatelessWidget('Stateless Widget 2'),
+            ],
+          ),
         ),
       ),
     );
@@ -77,7 +81,7 @@ class MyStatelessWidget extends StatelessWidget {
       width: 350, // İstediğiniz genişliği ayarlayın
       height: 70, // İstediğiniz yüksekliği ayarlayın
       decoration: BoxDecoration(
-        color: Colors.deepPurple[200],
+        color: Colors.deepPurple[500],
         borderRadius: BorderRadius.circular(20.0),
       ),
       padding: EdgeInsets.all(16.0),
@@ -111,10 +115,12 @@ class MyStatelessWidget extends StatelessWidget {
 
 class MyStatefulWidget extends StatelessWidget {
   final List<Color> customColors = [
-    Colors.deepPurple.shade200,
-    Colors.blue.shade200,
-    Colors.green.shade200,
-    Colors.orange.shade200,
+    Colors.deepPurple,
+    Colors.blue,
+    Colors.green,
+    Colors.orange,
+    Colors.purpleAccent,
+    Colors.redAccent,
   ];
 
   final List<String> boxTexts = [
@@ -122,6 +128,8 @@ class MyStatefulWidget extends StatelessWidget {
     'CÜMLE KURMA',
     'TABU',
     'KELİME EŞLEŞTİRME',
+    'KELİME TEKRARI',
+    'GRAMER OYUNU',
   ];
 
   final List<String> boxInfo = [
@@ -129,28 +137,39 @@ class MyStatefulWidget extends StatelessWidget {
     'Karşına bir cümlenin kelimeleri sıralanmamış bir şekilde gelecek ve senin o cümleyi sırlaman gerekecek ',
     'Karşına çıkan 5 adet kelimeden diğerleri ile alakalı olmayanı seç!',
     'Kelimeleri anlamlarıyla eşleştirmeceğin eğlenceli bir oyun!',
+    'Daha önce kaydetmiş olduğun kelimeleri tekrar edebileceğin bir oyun!',
+    'Gramer bilgini test edebileceğin ve geliştirebileceğin harika bir oyun!',
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            buildBox(0,context),
-            buildBox(1,context),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            buildBox(2,context),
-            buildBox(3,context),
-          ],
-        ),
-      ],
+    return Expanded(
+      child: Column(
+        //mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              buildBox(0,context),
+              buildBox(1,context),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              buildBox(2,context),
+              buildBox(3,context),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              buildBox(4,context),
+              buildBox(5,context),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -181,6 +200,13 @@ class MyStatefulWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => MatchWords()),
+          );
+        }
+
+        if(index == 4){
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => WordRepaitScreen()),
           );
         }
 

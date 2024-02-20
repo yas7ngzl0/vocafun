@@ -435,19 +435,19 @@ void _deleteWordAndMeaning(String word) async {
   Color getBoxColor(String level) {
     switch (level) {
       case 'A1':
-        return Colors.green.shade400;
+        return Colors.green.shade500;
       case 'A2':
-        return Colors.blue.shade400;
+        return Colors.blue.shade500;
       case 'B1':
         return Colors.yellow.shade600;
       case 'B2':
-        return Colors.orange.shade400;
+        return Colors.orange.shade500;
       case 'C1':
-        return Colors.red.shade400;
+        return Colors.red.shade500;
       case 'C2':
-        return Colors.purple.shade300;
+        return Colors.purple.shade500;
       default:
-        return Colors.blue.shade400;
+        return Colors.blue.shade500;
     }
   }
 
@@ -481,18 +481,18 @@ class LanguageLevelButton extends StatelessWidget {
 Color getButtonColor(String level) {
   switch (level) {
     case 'A1':
-      return Colors.green.shade400;
+      return Colors.green.shade500;
     case 'A2':
-      return Colors.blue.shade400;
+      return Colors.blue.shade500;
     case 'B1':
       return Colors.yellow.shade500;
     case 'B2':
-      return Colors.orange.shade400;
+      return Colors.orange.shade500;
     case 'C1':
-      return Colors.red.shade400;
+      return Colors.red.shade500;
     case 'C2':
-      return Colors.purple.shade400;
+      return Colors.purple.shade500;
     default:
-      return Colors.blue.shade400;
+      return Colors.blue.shade500;
   }
 }

@@ -354,6 +354,7 @@ class _MakeSentencesScreenState extends State<MakeSentencesScreen> with SingleTi
                                 for (int i = favoriteIcons.length - 1; i >= 0; i--) {
                                   if (favoriteIcons[i]) {
                                     favoriteIcons[i] = false;
+                                    selectedSentenceString = selectedSentenceWords.join(" ");
                                     //daha sonra kullanıcı doğru olanı yazsa bile puan eklememek için
                                     tempetureScore = 0;
                                     if(i == 0){
